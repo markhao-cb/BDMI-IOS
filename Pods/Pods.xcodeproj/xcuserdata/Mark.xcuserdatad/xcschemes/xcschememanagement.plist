@@ -3,8 +3,50 @@
 <plist version="1.0">
 <dict>
 	<key>SchemeUserState</key>
-	<dict/>
+	<dict>
+		<key>JCAlertView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Kingfisher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>NVActivityIndicatorView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-BDMI.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>213BB00352E2EDB367593BB2CC782BCD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BDDC4DBF7654960710F7FF7B28F35033</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E6AF542C0BD4B678F0B156D005629387</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E96E13C4D3B5B5FC0651440734C2BF4D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

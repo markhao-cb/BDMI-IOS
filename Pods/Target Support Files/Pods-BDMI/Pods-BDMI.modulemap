@@ -1,0 +1,6 @@
+framework module Pods_BDMI {
+  umbrella header "Pods-BDMI-umbrella.h"
+
+  export *
+  module * { export * }
+}

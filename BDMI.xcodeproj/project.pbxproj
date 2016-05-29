@@ -7,21 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25EBC62CB7CDABEBC6F0D336 /* Pods_BDMI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FAB298E6887C8197C49406 /* Pods_BDMI.framework */; };
+		4D6C51CD1CFB66B3005101C6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51CC1CFB66B3005101C6 /* Utilities.swift */; };
+		4D6C51D11CFB671C005101C6 /* TMDBAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51D01CFB671C005101C6 /* TMDBAuthViewController.swift */; };
+		4D6C51D31CFB6754005101C6 /* TMDBClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51D21CFB6754005101C6 /* TMDBClient.swift */; };
+		4D6C51D51CFB67A1005101C6 /* TMDBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51D41CFB67A1005101C6 /* TMDBConstants.swift */; };
+		4D6C51D71CFB6918005101C6 /* TMDBConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51D61CFB6918005101C6 /* TMDBConfig.swift */; };
+		4D6C51D91CFB69C5005101C6 /* TMDBMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51D81CFB69C5005101C6 /* TMDBMovie.swift */; };
+		4D6C51DB1CFB6A38005101C6 /* TMDBConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51DA1CFB6A38005101C6 /* TMDBConvenience.swift */; };
+		4D6C51DF1CFB6BAB005101C6 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51DE1CFB6BAB005101C6 /* BorderedButton.swift */; };
 		4DFEE1831CFAAC4B0032D90F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFEE1821CFAAC4B0032D90F /* AppDelegate.swift */; };
-		4DFEE1851CFAAC4B0032D90F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFEE1841CFAAC4B0032D90F /* ViewController.swift */; };
+		4DFEE1851CFAAC4B0032D90F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */; };
 		4DFEE1881CFAAC4B0032D90F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DFEE1861CFAAC4B0032D90F /* Main.storyboard */; };
 		4DFEE18A1CFAAC4B0032D90F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DFEE1891CFAAC4B0032D90F /* Assets.xcassets */; };
 		4DFEE18D1CFAAC4B0032D90F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DFEE18B1CFAAC4B0032D90F /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		025661DDF217F77A691F777F /* Pods-BDMI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BDMI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BDMI/Pods-BDMI.debug.xcconfig"; sourceTree = "<group>"; };
+		4D6C51CC1CFB66B3005101C6 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		4D6C51D01CFB671C005101C6 /* TMDBAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBAuthViewController.swift; sourceTree = "<group>"; };
+		4D6C51D21CFB6754005101C6 /* TMDBClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBClient.swift; sourceTree = "<group>"; };
+		4D6C51D41CFB67A1005101C6 /* TMDBConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConstants.swift; sourceTree = "<group>"; };
+		4D6C51D61CFB6918005101C6 /* TMDBConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConfig.swift; sourceTree = "<group>"; };
+		4D6C51D81CFB69C5005101C6 /* TMDBMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBMovie.swift; sourceTree = "<group>"; };
+		4D6C51DA1CFB6A38005101C6 /* TMDBConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBConvenience.swift; sourceTree = "<group>"; };
+		4D6C51DE1CFB6BAB005101C6 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		4DFEE17F1CFAAC4B0032D90F /* BDMI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDMI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DFEE1821CFAAC4B0032D90F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4DFEE1841CFAAC4B0032D90F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4DFEE1871CFAAC4B0032D90F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4DFEE1891CFAAC4B0032D90F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DFEE18C1CFAAC4B0032D90F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DFEE18E1CFAAC4B0032D90F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9451C2D2C9B47F3D9EE642E7 /* Pods-BDMI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BDMI.release.xcconfig"; path = "Pods/Target Support Files/Pods-BDMI/Pods-BDMI.release.xcconfig"; sourceTree = "<group>"; };
+		F2FAB298E6887C8197C49406 /* Pods_BDMI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BDMI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +49,66 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25EBC62CB7CDABEBC6F0D336 /* Pods_BDMI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		069C46D205609803C0F892A1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				025661DDF217F77A691F777F /* Pods-BDMI.debug.xcconfig */,
+				9451C2D2C9B47F3D9EE642E7 /* Pods-BDMI.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		4D6C51CE1CFB66F5005101C6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4D6C51CF1CFB66FB005101C6 /* TMDB */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		4D6C51CF1CFB66FB005101C6 /* TMDB */ = {
+			isa = PBXGroup;
+			children = (
+				4D6C51D01CFB671C005101C6 /* TMDBAuthViewController.swift */,
+				4D6C51D21CFB6754005101C6 /* TMDBClient.swift */,
+				4D6C51D41CFB67A1005101C6 /* TMDBConstants.swift */,
+				4D6C51D61CFB6918005101C6 /* TMDBConfig.swift */,
+				4D6C51D81CFB69C5005101C6 /* TMDBMovie.swift */,
+				4D6C51DA1CFB6A38005101C6 /* TMDBConvenience.swift */,
+			);
+			name = TMDB;
+			sourceTree = "<group>";
+		};
+		4D6C51DC1CFB6B8B005101C6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4D6C51DE1CFB6BAB005101C6 /* BorderedButton.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		4D6C51DD1CFB6B90005101C6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		4DFEE1761CFAAC4B0032D90F = {
 			isa = PBXGroup;
 			children = (
 				4DFEE1811CFAAC4B0032D90F /* BDMI */,
 				4DFEE1801CFAAC4B0032D90F /* Products */,
+				069C46D205609803C0F892A1 /* Pods */,
+				645163521804D82E036DD1E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +123,25 @@
 		4DFEE1811CFAAC4B0032D90F /* BDMI */ = {
 			isa = PBXGroup;
 			children = (
+				4D6C51DD1CFB6B90005101C6 /* Controller */,
+				4D6C51DC1CFB6B8B005101C6 /* View */,
+				4D6C51CE1CFB66F5005101C6 /* Model */,
 				4DFEE1821CFAAC4B0032D90F /* AppDelegate.swift */,
-				4DFEE1841CFAAC4B0032D90F /* ViewController.swift */,
 				4DFEE1861CFAAC4B0032D90F /* Main.storyboard */,
 				4DFEE1891CFAAC4B0032D90F /* Assets.xcassets */,
 				4DFEE18B1CFAAC4B0032D90F /* LaunchScreen.storyboard */,
 				4DFEE18E1CFAAC4B0032D90F /* Info.plist */,
+				4D6C51CC1CFB66B3005101C6 /* Utilities.swift */,
 			);
 			path = BDMI;
+			sourceTree = "<group>";
+		};
+		645163521804D82E036DD1E4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2FAB298E6887C8197C49406 /* Pods_BDMI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +151,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DFEE1911CFAAC4B0032D90F /* Build configuration list for PBXNativeTarget "BDMI" */;
 			buildPhases = (
+				ED0847B454A2498D592AA1DD /* Check Pods Manifest.lock */,
 				4DFEE17B1CFAAC4B0032D90F /* Sources */,
 				4DFEE17C1CFAAC4B0032D90F /* Frameworks */,
 				4DFEE17D1CFAAC4B0032D90F /* Resources */,
+				416A6E3495C33822804AAD4D /* Embed Pods Frameworks */,
+				DF87932584CD11DEC56B6748 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -130,13 +213,69 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		416A6E3495C33822804AAD4D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BDMI/Pods-BDMI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF87932584CD11DEC56B6748 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BDMI/Pods-BDMI-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED0847B454A2498D592AA1DD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4DFEE17B1CFAAC4B0032D90F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DFEE1851CFAAC4B0032D90F /* ViewController.swift in Sources */,
+				4D6C51DF1CFB6BAB005101C6 /* BorderedButton.swift in Sources */,
+				4D6C51D51CFB67A1005101C6 /* TMDBConstants.swift in Sources */,
+				4D6C51D91CFB69C5005101C6 /* TMDBMovie.swift in Sources */,
+				4D6C51D31CFB6754005101C6 /* TMDBClient.swift in Sources */,
+				4D6C51CD1CFB66B3005101C6 /* Utilities.swift in Sources */,
+				4D6C51DB1CFB6A38005101C6 /* TMDBConvenience.swift in Sources */,
+				4D6C51D71CFB6918005101C6 /* TMDBConfig.swift in Sources */,
+				4DFEE1851CFAAC4B0032D90F /* LoginViewController.swift in Sources */,
 				4DFEE1831CFAAC4B0032D90F /* AppDelegate.swift in Sources */,
+				4D6C51D11CFB671C005101C6 /* TMDBAuthViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +386,7 @@
 		};
 		4DFEE1921CFAAC4B0032D90F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 025661DDF217F77A691F777F /* Pods-BDMI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BDMI/Info.plist;
@@ -258,6 +398,7 @@
 		};
 		4DFEE1931CFAAC4B0032D90F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9451C2D2C9B47F3D9EE642E7 /* Pods-BDMI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BDMI/Info.plist;
@@ -286,6 +427,7 @@
 				4DFEE1931CFAAC4B0032D90F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -3,12 +3,46 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Auth View Controller-->
+        <scene sceneID="zjT-16-VPN">
+            <objects>
+                <viewController storyboardIdentifier="TMDBAuthViewController" id="A97-3v-X9r" customClass="TMDBAuthViewController" customModule="BDMI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hrq-pS-YaV"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZY4-pq-zWk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wAk-6n-niY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TNV-RR-uOo">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TNV-RR-uOo" firstAttribute="top" secondItem="hrq-pS-YaV" secondAttribute="bottom" constant="-20" id="0yJ-Pk-4cw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TNV-RR-uOo" secondAttribute="trailing" constant="-20" id="KLd-M4-Lib"/>
+                            <constraint firstItem="TNV-RR-uOo" firstAttribute="leading" secondItem="wAk-6n-niY" secondAttribute="leadingMargin" constant="-20" id="kXa-EY-32g"/>
+                            <constraint firstItem="ZY4-pq-zWk" firstAttribute="top" secondItem="TNV-RR-uOo" secondAttribute="bottom" id="t0i-cz-plm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="TNV-RR-uOo" id="zcv-Hu-W2h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="51q-wb-RaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="306" y="-286"/>
+        </scene>
+        <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BDMI" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="BDMI" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +50,63 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Z8t-Cv-qYn">
+                                <rect key="frame" x="20" y="40" width="560" height="560"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="qjZ-Wy-ft1">
+                                        <rect key="frame" x="153" y="0.0" width="254" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="f1v-g4-2bk"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ClY-GO-5gD">
+                                        <rect key="frame" x="0.0" y="200" width="560" height="360"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QR2-No-8Gn" customClass="BorderedButton" customModule="BDMI" customModuleProvider="target">
+                                                <rect key="frame" x="128" y="287" width="304" height="38"/>
+                                                <color key="backgroundColor" red="0.3230019211769104" green="0.53823161125183105" blue="0.088792376220226288" alpha="0.75969827586206895" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" name="GujaratiSangamMN" family="Gujarati Sangam MN" pointSize="20"/>
+                                                <inset key="contentEdgeInsets" minX="20" minY="5" maxX="20" maxY="5"/>
+                                                <state key="normal" title="Authenticate with TheMovieDB">
+                                                    <color key="titleColor" red="0.99195677042007446" green="0.99622899293899536" blue="0.99192315340042114" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleShadowColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GVc-al-Yz2"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="QR2-No-8Gn" firstAttribute="centerX" secondItem="ClY-GO-5gD" secondAttribute="centerX" id="Ah7-0a-Fk1"/>
+                                            <constraint firstAttribute="bottom" secondItem="QR2-No-8Gn" secondAttribute="bottom" constant="35" id="xW8-hB-AEH"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ClY-GO-5gD" firstAttribute="leading" secondItem="Z8t-Cv-qYn" secondAttribute="leading" id="N1p-9B-Bqh"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.99195677042007446" green="0.99622899293899536" blue="0.99192315340042114" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Z8t-Cv-qYn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="YiY-AR-NR7"/>
+                            <constraint firstItem="Z8t-Cv-qYn" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="djL-81-bmS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Z8t-Cv-qYn" secondAttribute="trailing" id="eG4-Ez-haA"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Z8t-Cv-qYn" secondAttribute="bottom" id="mE3-fL-e1c"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="QR2-No-8Gn" id="MPp-7Y-Agv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="305" y="429"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo" width="254" height="254"/>
+    </resources>
 </document>
