@@ -93,7 +93,10 @@ extension TMDBClient {
         static let MovieReleaseDate = "release_date"
         static let MovieReleaseYear = "release_year"
         static let MovieResults = "results"
-        
+        static let MovieOverView = "overview"
+        static let MovieVoteAverage = "vote_average"
+        static let MovieVoteCount = "vote_count"
+        static let MoviePopularity = "popularity"
     }
     
     // MARK: Poster Sizes

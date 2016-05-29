@@ -45,7 +45,7 @@ class LoginViewController: UIViewController {
     // MARK: Login
     
     private func completeLogin() {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("ManagerNavigationController") as! UINavigationController
+        let controller = storyboard!.instantiateViewControllerWithIdentifier("BDMIHomeViewController") as! UINavigationController
         presentViewController(controller, animated: true, completion: nil)
     }
 }
