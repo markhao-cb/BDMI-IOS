@@ -106,6 +106,8 @@ extension TMDBClient {
         static let MovieVoteAverage = "vote_average"
         static let MovieVoteCount = "vote_count"
         static let MoviePopularity = "popularity"
+        static let MovieRuntime = "runtime"
+        static let MovieCollection = "belongs_to_collection"
         
         // MARK: Collections
         static let CollectionBackdrop = "backdrop_path"
@@ -119,5 +121,11 @@ extension TMDBClient {
     struct PosterSizes {
         static let RowPoster = TMDBClient.sharedInstance.config.posterSizes[2]
         static let DetailPoster = TMDBClient.sharedInstance.config.posterSizes[4]
+    }
+    
+    //MARK: Backdrop Sizes
+    struct BackdropSizes {
+        static let RowBackdrop = TMDBClient.sharedInstance.config.backdropSizes[0]
+        static let DetailBackdrop = TMDBClient.sharedInstance.config.backdropSizes[1]
     }
 }

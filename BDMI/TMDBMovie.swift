@@ -19,6 +19,8 @@ struct TMDBMovie {
     var overview : String?
     var voteCount : Int?
     var popularity : Float?
+    var runtime: Int?
+    var belongsToCollection : [String: AnyObject]?
     
     
     // MARK: Initializers
@@ -32,6 +34,8 @@ struct TMDBMovie {
         voteCount = dictionary[TMDBClient.JSONResponseKeys.MovieVoteCount] as? Int
         voteAverage = dictionary[TMDBClient.JSONResponseKeys.MovieVoteAverage] as? Float
         popularity = dictionary[TMDBClient.JSONResponseKeys.MoviePopularity] as? Float
+        runtime = dictionary[TMDBClient.JSONResponseKeys.MovieRuntime] as? Int
+        belongsToCollection = dictionary[TMDBClient.JSONResponseKeys.MovieCollection] as? [String: AnyObject]
         
         if let releaseDateString = dictionary[TMDBClient.JSONResponseKeys.MovieReleaseDate] as? String where releaseDateString.isEmpty == false {
             releaseYear = releaseDateString.substringToIndex(releaseDateString.startIndex.advancedBy(4))

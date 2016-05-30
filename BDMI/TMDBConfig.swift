@@ -24,6 +24,7 @@ class TMDBConfig: NSObject, NSCoding {
     var secureBaseImageURLString =  "https://image.tmdb.org/t/p/"
     var posterSizes = ["w92", "w154", "w185", "w342", "w500", "w780", "original"]
     var profileSizes = ["w45", "w185", "h632", "original"]
+    var backdropSizes = ["w300", "w780", "w1280", "original"]
     var dateUpdated: NSDate? = nil
     
     // returns the number days since the config was last updated

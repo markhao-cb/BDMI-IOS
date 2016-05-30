@@ -179,7 +179,7 @@ extension TMDBClient {
         }
     }
     
-    func getMovieDetailBy(id: Int, completionHandlerForWatchlist: (result: TMDBMovie?, error: NSError?) -> Void) {
+    func getMovieDetailBy(id: Int, completionHandlerForGetDetail: (result: TMDBMovie?, error: NSError?) -> Void) {
         
         let parameters = [String: AnyObject]()
         var mutableMethod: String = Methods.MovieDetail
@@ -188,15 +188,15 @@ extension TMDBClient {
         taskForGETMethod(mutableMethod, parameters: parameters) { (results, error) in
             
             if let error = error {
-                completionHandlerForWatchlist(result: nil, error: error)
+                completionHandlerForGetDetail(result: nil, error: error)
             } else {
                 
                 if let results = results as? [String:AnyObject] {
                     
                     let movie = TMDBMovie(dictionary: results)
-                    completionHandlerForWatchlist(result: movie, error: nil)
+                    completionHandlerForGetDetail(result: movie, error: nil)
                 } else {
-                    completionHandlerForWatchlist(result: nil, error: NSError(domain: "getWatchlistMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getWatchlistMovies"]))
+                    completionHandlerForGetDetail(result: nil, error: NSError(domain: "getMovieDetail parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMovieDetail"]))
                 }
             }
         }
