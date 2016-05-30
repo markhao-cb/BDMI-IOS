@@ -11,14 +11,14 @@ struct TMDBMovie {
     
     // MARK: Properties
     
-    let title: String
-    let id: Int
-    let posterPath: String?
-    let releaseYear: String?
-    let voteAverage : Float?
-    let overview : String?
-    let voteCount : Int?
-    let popularity : Float?
+    var title: String
+    var id: Int
+    var posterPath: String?
+    var releaseYear: String?
+    var voteAverage : Float?
+    var overview : String?
+    var voteCount : Int?
+    var popularity : Float?
     
     
     // MARK: Initializers

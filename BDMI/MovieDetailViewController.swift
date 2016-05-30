@@ -14,17 +14,10 @@ class MovieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
         if let movie = movie {
             getMovieDetailsById(movie.id)
         }
-        
     }
-
 }
 
 
@@ -37,6 +30,7 @@ extension MovieDetailViewController {
                     showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
+                self.movie = result
             })
         }
     }

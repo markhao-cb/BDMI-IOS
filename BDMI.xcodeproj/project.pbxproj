@@ -20,6 +20,9 @@
 		4D6C51E31CFB8E6F005101C6 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51E21CFB8E6F005101C6 /* MovieTableViewCell.swift */; };
 		4D6C51E51CFB9E92005101C6 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51E41CFB9E92005101C6 /* MovieCollectionViewCell.swift */; };
 		4D6C51E71CFBBA23005101C6 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51E61CFBBA23005101C6 /* MovieDetailViewController.swift */; };
+		4D6C51E91CFBFA4C005101C6 /* BDMIMovieCollectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51E81CFBFA4C005101C6 /* BDMIMovieCollectionsViewController.swift */; };
+		4D6C51ED1CFBFB46005101C6 /* BDMIMovieCollectionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51EC1CFBFB46005101C6 /* BDMIMovieCollectionsTableViewCell.swift */; };
+		4D6C51EF1CFC01BF005101C6 /* TMDBCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51EE1CFC01BF005101C6 /* TMDBCollection.swift */; };
 		4DFEE1831CFAAC4B0032D90F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFEE1821CFAAC4B0032D90F /* AppDelegate.swift */; };
 		4DFEE1851CFAAC4B0032D90F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */; };
 		4DFEE1881CFAAC4B0032D90F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DFEE1861CFAAC4B0032D90F /* Main.storyboard */; };
@@ -41,6 +44,9 @@
 		4D6C51E21CFB8E6F005101C6 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		4D6C51E41CFB9E92005101C6 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		4D6C51E61CFBBA23005101C6 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		4D6C51E81CFBFA4C005101C6 /* BDMIMovieCollectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BDMIMovieCollectionsViewController.swift; sourceTree = "<group>"; };
+		4D6C51EC1CFBFB46005101C6 /* BDMIMovieCollectionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BDMIMovieCollectionsTableViewCell.swift; sourceTree = "<group>"; };
+		4D6C51EE1CFC01BF005101C6 /* TMDBCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TMDBCollection.swift; sourceTree = "<group>"; };
 		4DFEE17F1CFAAC4B0032D90F /* BDMI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDMI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DFEE1821CFAAC4B0032D90F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 				4D6C51D61CFB6918005101C6 /* TMDBConfig.swift */,
 				4D6C51D81CFB69C5005101C6 /* TMDBMovie.swift */,
 				4D6C51DA1CFB6A38005101C6 /* TMDBConvenience.swift */,
+				4D6C51EE1CFC01BF005101C6 /* TMDBCollection.swift */,
 			);
 			name = TMDB;
 			sourceTree = "<group>";
@@ -100,6 +107,7 @@
 				4D6C51DE1CFB6BAB005101C6 /* BorderedButton.swift */,
 				4D6C51E21CFB8E6F005101C6 /* MovieTableViewCell.swift */,
 				4D6C51E41CFB9E92005101C6 /* MovieCollectionViewCell.swift */,
+				4D6C51EC1CFBFB46005101C6 /* BDMIMovieCollectionsTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -110,6 +118,7 @@
 				4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */,
 				4D6C51E01CFB77C4005101C6 /* BDMIMovieViewController.swift */,
 				4D6C51E61CFBBA23005101C6 /* MovieDetailViewController.swift */,
+				4D6C51E81CFBFA4C005101C6 /* BDMIMovieCollectionsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -278,12 +287,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D6C51EF1CFC01BF005101C6 /* TMDBCollection.swift in Sources */,
+				4D6C51ED1CFBFB46005101C6 /* BDMIMovieCollectionsTableViewCell.swift in Sources */,
 				4D6C51DF1CFB6BAB005101C6 /* BorderedButton.swift in Sources */,
 				4D6C51E51CFB9E92005101C6 /* MovieCollectionViewCell.swift in Sources */,
 				4D6C51D51CFB67A1005101C6 /* TMDBConstants.swift in Sources */,
 				4D6C51E31CFB8E6F005101C6 /* MovieTableViewCell.swift in Sources */,
 				4D6C51E71CFBBA23005101C6 /* MovieDetailViewController.swift in Sources */,
 				4D6C51D91CFB69C5005101C6 /* TMDBMovie.swift in Sources */,
+				4D6C51E91CFBFA4C005101C6 /* BDMIMovieCollectionsViewController.swift in Sources */,
 				4D6C51D31CFB6754005101C6 /* TMDBClient.swift in Sources */,
 				4D6C51CD1CFB66B3005101C6 /* Utilities.swift in Sources */,
 				4D6C51DB1CFB6A38005101C6 /* TMDBConvenience.swift in Sources */,

@@ -18,21 +18,31 @@ class BDMIMovieViewController: UIViewController {
     var nowShowingMovies : [TMDBMovie]?
     var upcomingMovies : [TMDBMovie]?
     var popularMovies : [TMDBMovie]?
+    var topRatedMovies : [TMDBMovie]?
     var storedOffsets = [Int: CGFloat]()
     
     
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadData()
+        addRefreshControl()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        getNowShowingMovies()
-        getPopularMovies()
-        geUpcomingMovies()
+    func refresh(refreshControl: UIRefreshControl) {
+        loadData()
+        refreshControl.endRefreshing()
     }
     
+}
+
+//MARK: UI related and navigation methods
+extension BDMIMovieViewController {
+    private func addRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
+        tableView.addSubview(refreshControl)
+    }
 }
 
 
@@ -40,7 +50,7 @@ class BDMIMovieViewController: UIViewController {
 extension BDMIMovieViewController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -59,6 +69,10 @@ extension BDMIMovieViewController : UITableViewDelegate, UITableViewDataSource {
             //POPULAR
         case 2:
             changeTextForLabel(cell.sectionLabel, text: "Popular")
+            break
+            //TOP RATED
+        case 3:
+            changeTextForLabel(cell.sectionLabel, text: "Top Rated")
             break
         default:
             break
@@ -110,7 +124,11 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
                 return min(movies.count, 20)
             }
             break
-            
+            //TOP RATED
+        case 3:
+            if let movies = topRatedMovies {
+                return min(movies.count, 20)
+            }
         default:
             break
         }
@@ -133,6 +151,11 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
             break
         case 2: /* POPULAR */
             if let movies = popularMovies {
+                movie = movies[indexPath.row]
+            }
+            break
+        case 3: /* TOP RATED */
+            if let movies = topRatedMovies {
                 movie = movies[indexPath.row]
             }
             break
@@ -178,6 +201,11 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
                 movie = movies[indexPath.row]
             }
             break
+        case 3: /* TOP RATED */
+            if let movies = topRatedMovies {
+                movie = movies[indexPath.row]
+            }
+            break
         default: break
         }
         movieDetailVC.movie = movie
@@ -187,7 +215,14 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
 
 //MARK: Networking Methods
 extension BDMIMovieViewController {
-    func getNowShowingMovies() {
+    private func loadData() {
+        getNowShowingMovies()
+        getPopularMovies()
+        geUpcomingMovies()
+        getTopRatedMovies()
+    }
+    
+    private func getNowShowingMovies() {
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.NowPlaying) { (result, error) in
             performUIUpdatesOnMain({ 
                 guard (error == nil) else {
@@ -196,11 +231,12 @@ extension BDMIMovieViewController {
                 }
                 self.nowShowingMovies = result!
                 self.tableView.reloadData()
+                print("Load Now Showing Movies Successfully")
             })
         }
     }
     
-    func geUpcomingMovies() {
+    private func geUpcomingMovies() {
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.UpComing) { (result, error) in
             performUIUpdatesOnMain({
                 guard (error == nil) else {
@@ -209,11 +245,12 @@ extension BDMIMovieViewController {
                 }
                 self.upcomingMovies = result
                 self.tableView.reloadData()
+                print("Load Upcoming Movies Successfully")
             })
         }
     }
     
-    func getPopularMovies() {
+    private func getPopularMovies() {
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.Popular) { (result, error) in
             performUIUpdatesOnMain({
                 guard (error == nil) else {
@@ -222,6 +259,7 @@ extension BDMIMovieViewController {
                 }
                 self.popularMovies = result
                 self.tableView.reloadData()
+                print("Load Popular Movies Successfully")
             })
         }
     }
@@ -233,7 +271,9 @@ extension BDMIMovieViewController {
                     showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
+                self.topRatedMovies = result
                 self.tableView.reloadData()
+                print("Load Top Rated Movies Successfully")
             })
         }
     }

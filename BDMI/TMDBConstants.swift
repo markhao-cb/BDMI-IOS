@@ -106,6 +106,13 @@ extension TMDBClient {
         static let MovieVoteAverage = "vote_average"
         static let MovieVoteCount = "vote_count"
         static let MoviePopularity = "popularity"
+        
+        // MARK: Collections
+        static let CollectionBackdrop = "backdrop_path"
+        static let CollectionID = "id"
+        static let CollectionName = "name"
+        static let CollectionParts = "parts"
+        static let CollectionPoster = "poster_path"
     }
     
     // MARK: Poster Sizes
