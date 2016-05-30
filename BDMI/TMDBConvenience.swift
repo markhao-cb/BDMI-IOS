@@ -135,28 +135,73 @@ extension TMDBClient {
     
     // MARK: GET Convenience Methods
     
-    func getFavoriteMovies(completionHandlerForFavMovies: (result: [TMDBMovie]?, error: NSError?) -> Void) {
+    func getNowPlayingMovies(completionHandlerForNowPlayingMovies: (result: [TMDBMovie]?, error: NSError?) -> Void) {
         
-        let parameters = [TMDBClient.ParameterKeys.SessionID: TMDBClient.sharedInstance.sessionID!]
-        var mutableMethod: String = Methods.AccountIDFavoriteMovies
-        mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance.userID!))!
+        let parameters = [String: AnyObject]()
+        let method = TMDBClient.Methods.NowPlaying
         
-        taskForGETMethod(mutableMethod, parameters: parameters) { (results, error) in
+        taskForGETMethod(method, parameters: parameters) { (results, error) in
             
             if let error = error {
-                completionHandlerForFavMovies(result: nil, error: error)
+                completionHandlerForNowPlayingMovies(result: nil, error: error)
             } else {
                 
                 if let results = results[TMDBClient.JSONResponseKeys.MovieResults] as? [[String:AnyObject]] {
                     
                     let movies = TMDBMovie.moviesFromResults(results)
-                    completionHandlerForFavMovies(result: movies, error: nil)
+                    completionHandlerForNowPlayingMovies(result: movies, error: nil)
                 } else {
-                    completionHandlerForFavMovies(result: nil, error: NSError(domain: "getFavoriteMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]))
+                    completionHandlerForNowPlayingMovies(result: nil, error: NSError(domain: "getNowPlayingMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getNowPlayingMovies"]))
                 }
             }
         }
     }
+    
+    func getMoviesBy(method: String, completionHandlerFoGetMovies: (result: [TMDBMovie]?, error: NSError?) -> Void) {
+        
+        let parameters = [String: AnyObject]()
+        let method = method
+        
+        taskForGETMethod(method, parameters: parameters) { (results, error) in
+            
+            if let error = error {
+                completionHandlerFoGetMovies(result: nil, error: error)
+            } else {
+                
+                if let results = results[TMDBClient.JSONResponseKeys.MovieResults] as? [[String:AnyObject]] {
+                    
+                    let movies = TMDBMovie.moviesFromResults(results)
+                    completionHandlerFoGetMovies(result: movies, error: nil)
+                } else {
+                    completionHandlerFoGetMovies(result: nil, error: NSError(domain: "getMovies \(method) parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMovies (\(method))"]))
+                }
+            }
+        }
+    }
+    
+    func getMovieDetailBy(id: Int, completionHandlerForWatchlist: (result: TMDBMovie?, error: NSError?) -> Void) {
+        
+        let parameters = [String: AnyObject]()
+        var mutableMethod: String = Methods.MovieDetail
+        mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.MovieID, value: String(id))!
+        
+        taskForGETMethod(mutableMethod, parameters: parameters) { (results, error) in
+            
+            if let error = error {
+                completionHandlerForWatchlist(result: nil, error: error)
+            } else {
+                
+                if let results = results as? [String:AnyObject] {
+                    
+                    let movie = TMDBMovie(dictionary: results)
+                    completionHandlerForWatchlist(result: movie, error: nil)
+                } else {
+                    completionHandlerForWatchlist(result: nil, error: NSError(domain: "getWatchlistMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getWatchlistMovies"]))
+                }
+            }
+        }
+    }
+    
     
     func getWatchlistMovies(completionHandlerForWatchlist: (result: [TMDBMovie]?, error: NSError?) -> Void) {
         

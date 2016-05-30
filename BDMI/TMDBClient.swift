@@ -29,7 +29,9 @@ class TMDBClient: NSObject {
         
         parameters[ParameterKeys.ApiKey] = Constants.ApiKey
         
-        let request = NSMutableURLRequest(URL: tmdbURLFromParameters(parameters, withPathExtension: method))
+        let url = tmdbURLFromParameters(parameters, withPathExtension: method)
+        
+        let request = NSMutableURLRequest(URL: url)
         
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
@@ -160,6 +162,12 @@ class TMDBClient: NSObject {
         } else {
             return nil
         }
+    }
+    
+    func createUrlForImages(size: String, filePath: String) -> NSURL {
+        let baseURL = NSURL(string: config.baseImageURLString)!
+        let url = baseURL.URLByAppendingPathComponent(size).URLByAppendingPathComponent(filePath)
+        return url
     }
     
     // create a URL from parameters

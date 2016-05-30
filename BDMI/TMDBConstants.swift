@@ -42,11 +42,20 @@ extension TMDBClient {
         // MARK: Config
         static let Config = "/configuration"
         
+        // MARK: General
+        static let NowPlaying = "/movie/now_playing"
+        static let UpComing = "/movie/upcoming"
+        static let TopRated = "/movie/top_rated"
+        static let Popular = "/movie/popular"
+        static let Latest = "/movie/latest"
+        static let MovieDetail = "/movie/{id}"
     }
     
     // MARK: URL Keys
     struct URLKeys {
         static let UserID = "id"
+        static let MovieID = "id"
+
     }
     
     // MARK: Parameter Keys
