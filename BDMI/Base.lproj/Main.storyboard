@@ -235,30 +235,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="139" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a2r-fC-JdB">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="150" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a2r-fC-JdB">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BDMIMovieCollectionsTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="BDMIMovieCollectionsTableViewCell" rowHeight="139" id="SwF-Un-dyP" customClass="BDMIMovieCollectionsTableViewCell" customModule="BDMI" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="600" height="139"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="BDMIMovieCollectionsTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="BDMIMovieCollectionsTableViewCell" rowHeight="150" id="SwF-Un-dyP" customClass="BDMIMovieCollectionsTableViewCell" customModule="BDMI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="600" height="150"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SwF-Un-dyP" id="rK3-Ff-r9f">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="139"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XeE-cs-H9p">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="139"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAc-tn-cxV">
-                                                    <rect key="frame" x="25" y="25" width="53" height="24"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5bM-Ox-G9x">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XeE-cs-H9p">
+                                                            <rect key="frame" x="0.0" y="-45" width="600" height="240"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="XeE-cs-H9p" secondAttribute="trailing" id="7zJ-0v-Pgb"/>
+                                                        <constraint firstAttribute="bottom" secondItem="XeE-cs-H9p" secondAttribute="bottom" constant="-45" id="Qwl-dr-fH8"/>
+                                                        <constraint firstItem="XeE-cs-H9p" firstAttribute="top" secondItem="5bM-Ox-G9x" secondAttribute="top" constant="-45" id="bCW-cC-Zsf"/>
+                                                        <constraint firstItem="XeE-cs-H9p" firstAttribute="leading" secondItem="5bM-Ox-G9x" secondAttribute="leading" id="fVB-fc-z5u"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAc-tn-cxV">
+                                                    <rect key="frame" x="29" y="105" width="45" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="dAc-tn-cxV" firstAttribute="top" secondItem="rK3-Ff-r9f" secondAttribute="topMargin" constant="17" id="EyK-9U-9uR"/>
-                                                <constraint firstItem="dAc-tn-cxV" firstAttribute="leading" secondItem="rK3-Ff-r9f" secondAttribute="leadingMargin" constant="17" id="eck-wc-l89"/>
+                                                <constraint firstItem="5bM-Ox-G9x" firstAttribute="top" secondItem="rK3-Ff-r9f" secondAttribute="topMargin" constant="-8" id="Qje-Dh-w0i"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="5bM-Ox-G9x" secondAttribute="bottom" constant="-8" id="V6C-nF-KYs"/>
+                                                <constraint firstItem="5bM-Ox-G9x" firstAttribute="leading" secondItem="rK3-Ff-r9f" secondAttribute="leadingMargin" constant="-8" id="XU2-hS-sqb"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="dAc-tn-cxV" secondAttribute="bottom" constant="16" id="cT8-FG-txz"/>
+                                                <constraint firstItem="dAc-tn-cxV" firstAttribute="leading" secondItem="rK3-Ff-r9f" secondAttribute="leadingMargin" constant="21" id="hr8-6i-4p8"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="5bM-Ox-G9x" secondAttribute="trailing" constant="-8" id="uhH-L0-bxK"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

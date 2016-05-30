@@ -18,6 +18,7 @@ extension Collection {
     @NSManaged var name: String?
     @NSManaged var id: NSNumber?
     @NSManaged var movies: NSSet?
+    @NSManaged var creationDate: NSDate?
     
     @NSManaged func addMoviesObject(movie: Movie)
     @NSManaged func removeMoviesObject(movie: Movie)

@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
     <entity name="Collection" representedClassName=".Collection" syncable="YES">
         <attribute name="backdrop" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="creationDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="collections" inverseEntity="Movie" syncable="YES"/>
@@ -32,7 +33,7 @@
     </entity>
     <elements>
         <element name="Movie" positionX="-63" positionY="-18" width="128" height="195"/>
-        <element name="Collection" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="Collection" positionX="-54" positionY="-9" width="128" height="120"/>
         <element name="FavoriteMovie" positionX="-27" positionY="90" width="128" height="105"/>
         <element name="WatchedMovie" positionX="-9" positionY="99" width="128" height="105"/>
     </elements>

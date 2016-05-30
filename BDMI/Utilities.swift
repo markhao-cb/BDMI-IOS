@@ -65,7 +65,7 @@ func showAlertViewWith(title: String, error: String, type: Utilities.AlertViewTy
 //MARK: ActivityIndeicator View
 extension NVActivityIndicatorView {
     class func showHUDAddedTo(view: UIView) {
-        let hud = NVActivityIndicatorView(frame: CGRectMake(0, 0, 100, 100), type: .BallSpinFadeLoader, color: UIColor.whiteColor(), padding: 20)
+        let hud = NVActivityIndicatorView(frame: CGRectMake(0, 0, 100, 100), type: .BallSpinFadeLoader, color: UIColor.grayColor(), padding: 20)
         hud.center = view.center
         hud.hidesWhenStopped = true
         view.addSubview(hud)

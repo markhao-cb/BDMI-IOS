@@ -21,6 +21,7 @@ class Collection: NSManagedObject {
             if let path = backdropPath {
                 self.backdrop = NSData(contentsOfURL: path)
             }
+            self.creationDate = NSDate()
             
         } else {
             fatalError("Could not find entity named: \(CoreDataEntityNames.Movie)")

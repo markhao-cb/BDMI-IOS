@@ -163,17 +163,14 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
         default: break
         }
         
-        let activityIndicatorView = NVActivityIndicatorView.init(frame: CGRectMake(0, 0, cell.frame.width / 4, cell.frame.width / 4), type: .BallSpinFadeLoader, color: UIColor.grayColor(), padding: nil)
-        activityIndicatorView.center = cell.center
-        activityIndicatorView.startAnimation()
-        cell.addSubview(activityIndicatorView)
+        NVActivityIndicatorView.showHUDAddedTo(cell)
         
         if let imagePath = movie?.posterPath {
             cell.imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.PosterSizes.RowPoster, filePath: imagePath),
                                               placeholderImage: nil,
-                                              optionsInfo: [.Transition(ImageTransition.Fade(1))], progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                                              optionsInfo: [.Transition(ImageTransition.Fade(0.5))], progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
                                                 performUIUpdatesOnMain({
-                                                    activityIndicatorView.stopAnimation()
+                                                    NVActivityIndicatorView.hideHUDForView(cell)
                                                     cell.imageView.alpha = 1.0
                                                 })
                                                 
@@ -307,13 +304,6 @@ extension BDMIMovieViewController {
         } catch {
             return nil
         }
-//        var error: NSError? = nil
-//        let count = Utilities.appDelegate.stack.context.countForFetchRequest(fetchRequest, error: &error)
-//        if let _ = error {
-//            return false
-//        } else {
-//            return count != 0
-//        }
     }
     
     private func createNewMovie(movie: TMDBMovie) -> Movie {
@@ -351,7 +341,7 @@ extension BDMIMovieViewController {
         let id = collection.id
         var backdropPath: NSURL? = nil
         if let path = collection.backdropPath {
-            backdropPath = TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.RowBackdrop, filePath: path)
+            backdropPath = TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: path)
         }
         let newCollection = Collection(name: name, id: id, backdropPath: backdropPath, context: Utilities.appDelegate.stack.context)
         print("New Collection Created!")
