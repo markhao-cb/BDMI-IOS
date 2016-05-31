@@ -108,6 +108,7 @@ extension TMDBClient {
         static let MoviePopularity = "popularity"
         static let MovieRuntime = "runtime"
         static let MovieCollection = "belongs_to_collection"
+        static let MovieBackdropPath = "backdrop_path"
         
         // MARK: Collections
         static let CollectionBackdrop = "backdrop_path"

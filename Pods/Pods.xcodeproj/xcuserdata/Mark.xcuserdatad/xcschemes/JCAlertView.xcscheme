@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '84342883ED3664657153C9CC'
+               BlueprintIdentifier = '88B13E6BCC2EC7D3285DEDBE'
                BlueprintName = 'JCAlertView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'JCAlertView.framework'>

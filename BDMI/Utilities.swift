@@ -16,6 +16,7 @@ struct Utilities {
     static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     static let session = NSURLSession.sharedSession()
     static let userDefault = NSUserDefaults.standardUserDefaults()
+    static let screenSize = UIScreen.mainScreen().bounds.size
     
     
     //MARK: Networking Methods
@@ -58,6 +59,11 @@ func showAlertViewWith(title: String, error: String, type: Utilities.AlertViewTy
         JCAlertView.showTwoButtonsWithTitle(title, message: error, buttonType: .Default, buttonTitle: firstButtonTitle, click: firstButtonHandler, buttonType: .Cancel, buttonTitle: secondButtonTitle, click: secondButtonHandler)
         break
     }
+}
+
+func configKingfisher(imageView: UIImageView) {
+    imageView.kf_showIndicatorWhenLoading = true
+    imageView.kf_indicator?.activityIndicatorViewStyle = .Gray
 }
 
 

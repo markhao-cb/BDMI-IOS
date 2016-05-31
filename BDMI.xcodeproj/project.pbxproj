@@ -35,6 +35,7 @@
 		4D6C52061CFC1C19005101C6 /* Collection+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51FE1CFC1C19005101C6 /* Collection+CoreDataProperties.swift */; };
 		4D6C52071CFC1C19005101C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51FF1CFC1C19005101C6 /* Collection.swift */; };
 		4D6C52091CFC1E8A005101C6 /* CoreDataConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C52081CFC1E8A005101C6 /* CoreDataConstants.swift */; };
+		4D6C52131CFCF37C005101C6 /* MovieDetailCellForHeaderSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C52121CFCF37C005101C6 /* MovieDetailCellForHeaderSection.swift */; };
 		4DFEE1831CFAAC4B0032D90F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFEE1821CFAAC4B0032D90F /* AppDelegate.swift */; };
 		4DFEE1851CFAAC4B0032D90F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */; };
 		4DFEE1881CFAAC4B0032D90F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DFEE1861CFAAC4B0032D90F /* Main.storyboard */; };
@@ -71,6 +72,8 @@
 		4D6C51FE1CFC1C19005101C6 /* Collection+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Collection+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4D6C51FF1CFC1C19005101C6 /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		4D6C52081CFC1E8A005101C6 /* CoreDataConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConstants.swift; sourceTree = "<group>"; };
+		4D6C520A1CFCC698005101C6 /* BDMI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BDMI-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D6C52121CFCF37C005101C6 /* MovieDetailCellForHeaderSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailCellForHeaderSection.swift; sourceTree = "<group>"; };
 		4DFEE17F1CFAAC4B0032D90F /* BDMI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BDMI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DFEE1821CFAAC4B0032D90F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4DFEE1841CFAAC4B0032D90F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 				4D6C51E21CFB8E6F005101C6 /* MovieTableViewCell.swift */,
 				4D6C51E41CFB9E92005101C6 /* MovieCollectionViewCell.swift */,
 				4D6C51EC1CFBFB46005101C6 /* BDMIMovieCollectionsTableViewCell.swift */,
+				4D6C52121CFCF37C005101C6 /* MovieDetailCellForHeaderSection.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -197,6 +201,7 @@
 				4DFEE18B1CFAAC4B0032D90F /* LaunchScreen.storyboard */,
 				4DFEE18E1CFAAC4B0032D90F /* Info.plist */,
 				4D6C51CC1CFB66B3005101C6 /* Utilities.swift */,
+				4D6C520A1CFCC698005101C6 /* BDMI-Bridging-Header.h */,
 			);
 			path = BDMI;
 			sourceTree = "<group>";
@@ -339,6 +344,7 @@
 				4D6C51E51CFB9E92005101C6 /* MovieCollectionViewCell.swift in Sources */,
 				4D6C51D51CFB67A1005101C6 /* TMDBConstants.swift in Sources */,
 				4D6C51F21CFC1498005101C6 /* Model.xcdatamodeld in Sources */,
+				4D6C52131CFCF37C005101C6 /* MovieDetailCellForHeaderSection.swift in Sources */,
 				4D6C51E31CFB8E6F005101C6 /* MovieTableViewCell.swift in Sources */,
 				4D6C51E71CFBBA23005101C6 /* MovieDetailViewController.swift in Sources */,
 				4D6C51F51CFC14E6005101C6 /* CoreDataTableViewController.swift in Sources */,
@@ -473,10 +479,13 @@
 			baseConfigurationReference = 025661DDF217F77A691F777F /* Pods-BDMI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = BDMI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.markqhao.BDMI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BDMI/BDMI-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -485,10 +494,12 @@
 			baseConfigurationReference = 9451C2D2C9B47F3D9EE642E7 /* Pods-BDMI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = BDMI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.markqhao.BDMI;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BDMI/BDMI-Bridging-Header.h";
 			};
 			name = Release;
 		};

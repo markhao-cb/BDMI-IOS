@@ -12,10 +12,14 @@ import NVActivityIndicatorView
 
 class BDMIMovieCollectionsViewController: UIViewController {
 
+    
+    //MARK: Properties
     @IBOutlet weak var tableView: UITableView!
     var collections : [Collection]?
     let cellSpacingHeight : CGFloat = 5
     
+    
+    //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchCollection()
@@ -95,7 +99,16 @@ extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableVie
 
 //MARK: UI Related Methods 
 extension BDMIMovieCollectionsViewController {
+    private func addRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
+        tableView.addSubview(refreshControl)
+    }
     
+    func refresh(refreshControl: UIRefreshControl) {
+        fetchCollection()
+        refreshControl.endRefreshing()
+    }
 }
 
 

@@ -87,9 +87,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-BDMI/JCAlertView.framework"
   install_framework "Pods-BDMI/Kingfisher.framework"
   install_framework "Pods-BDMI/NVActivityIndicatorView.framework"
+  install_framework "Pods-BDMI/TransitionAnimation.framework"
+  install_framework "Pods-BDMI/TransitionTreasury.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-BDMI/JCAlertView.framework"
   install_framework "Pods-BDMI/Kingfisher.framework"
   install_framework "Pods-BDMI/NVActivityIndicatorView.framework"
+  install_framework "Pods-BDMI/TransitionAnimation.framework"
+  install_framework "Pods-BDMI/TransitionTreasury.framework"
 fi

@@ -20,6 +20,7 @@ struct TMDBMovie {
     var voteCount : Int?
     var popularity : Float?
     var runtime: Int?
+    var backdropPath: String?
     var belongsToCollection : [String: AnyObject]?
     
     
@@ -35,6 +36,7 @@ struct TMDBMovie {
         voteAverage = dictionary[TMDBClient.JSONResponseKeys.MovieVoteAverage] as? Float
         popularity = dictionary[TMDBClient.JSONResponseKeys.MoviePopularity] as? Float
         runtime = dictionary[TMDBClient.JSONResponseKeys.MovieRuntime] as? Int
+        backdropPath = dictionary[TMDBClient.JSONResponseKeys.MovieBackdropPath] as? String
         belongsToCollection = dictionary[TMDBClient.JSONResponseKeys.MovieCollection] as? [String: AnyObject]
         
         if let releaseDateString = dictionary[TMDBClient.JSONResponseKeys.MovieReleaseDate] as? String where releaseDateString.isEmpty == false {

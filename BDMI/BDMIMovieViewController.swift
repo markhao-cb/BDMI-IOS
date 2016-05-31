@@ -10,24 +10,44 @@ import UIKit
 import NVActivityIndicatorView
 import Kingfisher
 import CoreData
+import TransitionTreasury
+import TransitionAnimation
 
 class BDMIMovieViewController: UIViewController {
     
     
     //MARK: Propertites
     @IBOutlet weak var tableView: UITableView!
+    var scrollView: UIScrollView?
     var nowShowingMovies : [TMDBMovie]?
     var upcomingMovies : [TMDBMovie]?
     var popularMovies : [TMDBMovie]?
     var topRatedMovies : [TMDBMovie]?
     var storedOffsets = [Int: CGFloat]()
     
+    var tr_presentTransition: TRViewControllerTransitionDelegate?
+    
     
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        scrollView = UIScrollView(frame: CGRectMake(0,0,Utilities.screenSize.width,200))
+        scrollView?.pagingEnabled = true
+        tableView.tableHeaderView = scrollView!
+        
         loadData()
         addRefreshControl()
+    }
+}
+
+//MARK: UI related and navigation methods
+extension BDMIMovieViewController {
+    
+    private func addRefreshControl() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
+        tableView.addSubview(refreshControl)
     }
     
     func refresh(refreshControl: UIRefreshControl) {
@@ -35,14 +55,48 @@ class BDMIMovieViewController: UIViewController {
         refreshControl.endRefreshing()
     }
     
-}
-
-//MARK: UI related and navigation methods
-extension BDMIMovieViewController {
-    private func addRefreshControl() {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
-        tableView.addSubview(refreshControl)
+    func setupScrollView() {
+        
+        let width = scrollView!.frame.width
+        let height = scrollView!.frame.height
+        var movies = [TMDBMovie]()
+        var i : CGFloat = 0
+        while i < 4 {
+            let movie = popularMovies![getRandomNumber((popularMovies?.count)!)]
+            if let backdropPath = movie.backdropPath where !movies.contains(movie) {
+                movies.append(movie)
+                let imageView = UIImageView(frame: CGRectMake(i * width, 0, width, height))
+                imageView.contentMode = .ScaleAspectFill
+                let label = UILabel(frame: CGRectMake(20, height - 50, width - 40, 40))
+                label.textAlignment = .Right
+                label.text = movie.title
+                label.font = UIFont.boldSystemFontOfSize(19)
+                label.textColor = UIColor.whiteColor()
+                imageView.addSubview(label)
+                scrollView!.addSubview(imageView)
+                imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: backdropPath), placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                    self.tableView.reloadData()
+                })
+                
+                i += 1
+            }
+        }
+        scrollView!.contentSize = CGSize(width: 4 * width, height: height)
+        NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
+    }
+    
+    func moveToNextPage (){
+        
+        let pageWidth:CGFloat = CGRectGetWidth(self.scrollView!.frame)
+        let maxWidth:CGFloat = pageWidth * 4
+        let contentOffset:CGFloat = self.scrollView!.contentOffset.x
+        
+        var slideToX = contentOffset + pageWidth
+        
+        if  contentOffset + pageWidth == maxWidth{
+            slideToX = 0
+        }
+        self.scrollView!.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(self.scrollView!.frame)), animated: true)
     }
 }
 
@@ -108,27 +162,27 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
             //NOW SHOWING
         case 0:
             if let movies = nowShowingMovies {
-                return min(movies.count, 20)
+               return movies.count
             }
             break
             
             //COMGING SOON
         case 1:
             if let movies = upcomingMovies {
-                return min(movies.count, 20)
+                return movies.count
             }
             break
             
             //POPULAR
         case 2:
             if let movies = popularMovies {
-                return min(movies.count, 20)
+                return movies.count
             }
             break
             //TOP RATED
         case 3:
             if let movies = topRatedMovies {
-                return min(movies.count, 20)
+                return movies.count
             }
         default:
             break
@@ -207,7 +261,7 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
         default: break
         }
         movieDetailVC.movie = movie
-        navigationController?.pushViewController(movieDetailVC, animated: true)
+        
     }
 }
 
@@ -257,6 +311,7 @@ extension BDMIMovieViewController {
                     return
                 }
                 self.popularMovies = result
+                self.setupScrollView()
                 self.tableView.reloadData()
                 print("Load Popular Movies Successfully")
             })
@@ -354,5 +409,9 @@ extension BDMIMovieViewController {
     private func changeTextForLabel(label: UILabel, text: String) {
         label.text = text
         label.sizeToFit()
+    }
+    
+    private func getRandomNumber(max: Int) -> Int {
+        return Int(arc4random_uniform(UInt32(max)))
     }
 }
