@@ -79,7 +79,7 @@ extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BDMIMovieCollectionsTableViewCell") as! BDMIMovieCollectionsTableViewCell
-        cell.configImageView()
+        cell.configCell()
         if let collections = collections {
             let collection = collections[indexPath.row]
             cell.backdropIV.image = UIImage(data: collection.backdrop!)

@@ -44,7 +44,7 @@ class BDMIMovieViewController: UIViewController {
 }
 
 //MARK: UI related and navigation methods
-extension BDMIMovieViewController {
+extension BDMIMovieViewController : UIGestureRecognizerDelegate {
     
     private func addRefreshControl() {
         let refreshControl = UIRefreshControl()
@@ -70,17 +70,21 @@ extension BDMIMovieViewController {
             if let backdropPath = movie.backdropPath where !movies.contains(movie) {
                 movies.append(movie)
                 let imageView = UIImageView(frame: CGRectMake(i * width, 0, width, height))
+                imageView.tag = movie.id
+                imageView.restorationIdentifier = movie.posterPath
                 imageView.contentMode = .ScaleAspectFill
+                imageView.userInteractionEnabled = true
                 let label = UILabel(frame: CGRectMake(20, height - 50, width - 40, 40))
-                label.textAlignment = .Right
+                configLabel(label)
                 label.text = movie.title
-                label.font = UIFont.boldSystemFontOfSize(19)
-                label.textColor = UIColor.whiteColor()
                 imageView.addSubview(label)
                 scrollView!.addSubview(imageView)
                 imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: backdropPath), placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
                     self.tableView.reloadData()
                 })
+                let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+                tap.delegate = self
+                imageView.addGestureRecognizer(tap)
                 
                 i += 1
             }
@@ -88,6 +92,17 @@ extension BDMIMovieViewController {
         scrollView!.contentSize = CGSize(width: 4 * width, height: height)
         scrollViewsetted = true
         NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
+    }
+    
+    func imageTapped(sender: UITapGestureRecognizer) {
+        let movieDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
+        let movieId = sender.view?.tag
+        let posterPath = sender.view?.restorationIdentifier
+        movieDetailVC.movieID = movieId
+        movieDetailVC.moviePosterPath = posterPath
+        movieDetailVC.modalDelegate = self
+        tr_presentViewController(movieDetailVC, method: TRPresentTransitionMethod.Fade)
+
     }
     
     func moveToNextPage (){
@@ -102,6 +117,12 @@ extension BDMIMovieViewController {
             slideToX = 0
         }
         self.scrollView!.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(self.scrollView!.frame)), animated: true)
+    }
+    
+    private func configLabel(label: UILabel) {
+        label.textAlignment = .Right
+        label.font = UIFont.boldSystemFontOfSize(19)
+        label.textColor = UIColor.whiteColor()
     }
 }
 
@@ -306,7 +327,9 @@ extension BDMIMovieViewController {
                 }
                 self.upcomingMovies = result
                 self.tableView.reloadData()
-                self.perfetchMovieDetails(result!)
+                delay(15, closure: {
+                    self.perfetchMovieDetails(result!)
+                })
                 print("Load Upcoming Movies Successfully")
             })
         }
@@ -321,7 +344,9 @@ extension BDMIMovieViewController {
                 }
                 self.popularMovies = result
                 if !self.scrollViewsetted {self.setupScrollView()}
-                self.perfetchMovieDetails(result!)
+                delay(30, closure: {
+                    self.perfetchMovieDetails(result!)
+                })
                 self.tableView.reloadData()
                 print("Load Popular Movies Successfully")
             })
@@ -336,7 +361,9 @@ extension BDMIMovieViewController {
                     return
                 }
                 self.topRatedMovies = result
-                self.perfetchMovieDetails(result!)
+                delay(45, closure: {
+                    self.perfetchMovieDetails(result!)
+                })
                 self.tableView.reloadData()
                 print("Load Top Rated Movies Successfully")
             })
@@ -351,6 +378,7 @@ extension BDMIMovieViewController {
                         print("Prefetch Failed. \(error.domain)")
                     } else {
                         Utilities.createNewMovie(result!)
+                        
                     }
                 })
             }

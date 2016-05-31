@@ -205,7 +205,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nra-IH-QHs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2813" y="253"/>
+            <point key="canvasLocation" x="2706" y="-63"/>
         </scene>
         <!--Discover-->
         <scene sceneID="ESW-1h-OLc">
@@ -291,7 +291,104 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ltW-MR-CIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2811" y="1016"/>
+            <point key="canvasLocation" x="2706" y="609"/>
+        </scene>
+        <!--My Lists-->
+        <scene sceneID="xlE-l3-ECS">
+            <objects>
+                <viewController id="Kn7-hO-4Li" customClass="MyListViewController" customModule="BDMI" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4uU-GU-4Kz"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZVx-4R-Tel"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fJO-w3-xgD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="137" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ald-Y2-RBI">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BDMIMovieCollectionsTableViewCell" rowHeight="137" id="Yib-vx-eh2" customClass="BDMIMovieCollectionsTableViewCell" customModule="BDMI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="137"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Yib-vx-eh2" id="TLm-KY-OAm">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="137"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ZO-ds-2WH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="137"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tbi-ki-ogi">
+                                                            <rect key="frame" x="0.0" y="-56" width="600" height="249"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvi-um-DdL">
+                                                            <rect key="frame" x="29" y="95" width="53" height="24"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Tbi-ki-ogi" firstAttribute="top" secondItem="1ZO-ds-2WH" secondAttribute="top" constant="-56" id="Esc-4j-3H8"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Tbi-ki-ogi" secondAttribute="trailing" id="OMX-6p-cM1"/>
+                                                        <constraint firstAttribute="bottom" secondItem="dvi-um-DdL" secondAttribute="bottom" constant="18" id="P8n-3p-qZZ"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Tbi-ki-ogi" secondAttribute="bottom" constant="-56" id="duf-QH-o09"/>
+                                                        <constraint firstItem="dvi-um-DdL" firstAttribute="leading" secondItem="1ZO-ds-2WH" secondAttribute="leading" constant="29" id="sAN-0T-TcD"/>
+                                                        <constraint firstItem="Tbi-ki-ogi" firstAttribute="leading" secondItem="1ZO-ds-2WH" secondAttribute="leading" id="thh-US-Efs"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1ZO-ds-2WH" firstAttribute="top" secondItem="TLm-KY-OAm" secondAttribute="topMargin" constant="-8" id="IMU-7k-IIv"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1ZO-ds-2WH" secondAttribute="trailing" constant="-8" id="TP7-np-fEo"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="1ZO-ds-2WH" secondAttribute="bottom" constant="-8" id="cpK-Sz-2y4"/>
+                                                <constraint firstItem="1ZO-ds-2WH" firstAttribute="leading" secondItem="TLm-KY-OAm" secondAttribute="leadingMargin" constant="-8" id="fVK-1T-2La"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="backdropIV" destination="Tbi-ki-ogi" id="clU-yu-ANs"/>
+                                            <outlet property="titleLabel" destination="dvi-um-DdL" id="hf1-W8-JfC"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Kn7-hO-4Li" id="06A-Ua-wPp"/>
+                                    <outlet property="delegate" destination="Kn7-hO-4Li" id="JBi-NJ-40g"/>
+                                </connections>
+                            </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ay7-Ia-yl3">
+                                <rect key="frame" x="216" y="28" width="169" height="29"/>
+                                <segments>
+                                    <segment title="My Favorite"/>
+                                    <segment title="Watched"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentControlChanged:" destination="Kn7-hO-4Li" eventType="valueChanged" id="AFG-qQ-byN"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ay7-Ia-yl3" firstAttribute="top" secondItem="4uU-GU-4Kz" secondAttribute="bottom" constant="8" id="2UO-fN-J1G"/>
+                            <constraint firstItem="ald-Y2-RBI" firstAttribute="top" secondItem="ay7-Ia-yl3" secondAttribute="bottom" constant="8" id="2sk-1A-9rd"/>
+                            <constraint firstItem="ald-Y2-RBI" firstAttribute="leading" secondItem="fJO-w3-xgD" secondAttribute="leadingMargin" constant="-20" id="4dc-Tr-fAf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ald-Y2-RBI" secondAttribute="trailing" constant="-20" id="7xy-eo-KMZ"/>
+                            <constraint firstItem="ZVx-4R-Tel" firstAttribute="top" secondItem="ald-Y2-RBI" secondAttribute="bottom" id="9we-MG-l7L"/>
+                            <constraint firstItem="ay7-Ia-yl3" firstAttribute="centerX" secondItem="fJO-w3-xgD" secondAttribute="centerX" id="VdT-H1-uAk"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Lists" image="mylist" selectedImage="mylist_selected" id="Fwn-w1-tWg"/>
+                    <connections>
+                        <outlet property="segmentControl" destination="ay7-Ia-yl3" id="tkL-m1-8LT"/>
+                        <outlet property="tableView" destination="ald-Y2-RBI" id="ZPE-LJ-ijC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VvW-xs-tS9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1987" y="1220"/>
         </scene>
         <!--Movie Detail View Controller-->
         <scene sceneID="t6k-zR-RvD">
@@ -388,6 +485,25 @@
                                             <outlet property="overviewLbl" destination="O44-9Q-4F3" id="70G-T7-tya"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="125" id="bdG-fm-60U" customClass="MovieDetailCellForImages" customModule="BDMI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="251" width="600" height="125"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bdG-fm-60U" id="cBa-lO-sa9">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="125"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f7D-4w-YFP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="125"/>
+                                                </scrollView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="f7D-4w-YFP" secondAttribute="bottom" constant="-8" id="2IR-9H-swf"/>
+                                                <constraint firstItem="f7D-4w-YFP" firstAttribute="leading" secondItem="cBa-lO-sa9" secondAttribute="leadingMargin" constant="-8" id="Cvn-og-6Uz"/>
+                                                <constraint firstItem="f7D-4w-YFP" firstAttribute="top" secondItem="cBa-lO-sa9" secondAttribute="topMargin" constant="-8" id="pfP-Zx-3fU"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="f7D-4w-YFP" secondAttribute="trailing" constant="-8" id="sz5-jE-dGz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="LV1-V6-E53" id="IV6-Fb-FpY"/>
@@ -477,6 +593,7 @@
                     <connections>
                         <segue destination="bMg-tv-6jP" kind="relationship" relationship="viewControllers" id="hS4-Yg-FK5"/>
                         <segue destination="HV2-ex-abM" kind="relationship" relationship="viewControllers" id="7dw-2o-HS2"/>
+                        <segue destination="Kn7-hO-4Li" kind="relationship" relationship="viewControllers" id="SXF-cx-Bc4"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gPf-gN-5Hq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -492,6 +609,8 @@
         <image name="like" width="24" height="24"/>
         <image name="liked" width="24" height="24"/>
         <image name="movie" width="24" height="24"/>
+        <image name="mylist" width="24" height="24"/>
+        <image name="mylist_selected" width="24" height="24"/>
         <image name="watch" width="24" height="24"/>
         <image name="watched" width="24" height="24"/>
     </resources>

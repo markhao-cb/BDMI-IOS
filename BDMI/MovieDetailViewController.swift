@@ -35,15 +35,15 @@ class MovieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackgroundView()
-        
-        if let id = movieID {
-            if case let movie as Movie = Utilities.objectSavedInCoreData(id, entity: CoreDataEntityNames.Movie) {
-                self.movie = movie
-            } else {
-                getMovieDetailsById(id)
+        if let _ = movie {} else {
+            if let id = movieID {
+                if case let movie as Movie = Utilities.objectSavedInCoreData(id, entity: CoreDataEntityNames.Movie) {
+                    self.movie = movie
+                } else {
+                    getMovieDetailsById(id)
+                }
             }
         }
-        
         headerView.configView()
     }
     
@@ -120,7 +120,11 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
         return 3
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if let _ = movie {
+            return 1
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -148,7 +152,12 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
         case 0:
             return 130
         case 1:
-            return movie!.overview!.heightWithConstrainedWidth(Utilities.screenSize.width - 36, font: UIFont.systemFontOfSize(15))
+            if let overview = movie?.overview {
+                return overview.heightWithConstrainedWidth(Utilities.screenSize.width - 36, font: UIFont.systemFontOfSize(15))
+            } else {
+                return 0
+            }
+            
         default:
             return 0
         }
