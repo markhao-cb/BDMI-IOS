@@ -16,28 +16,35 @@ class MovieDetailViewController: UIViewController {
     
     //MARK: Properties
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var headerView: MovieDetailHeaderSectionView!
+    
+    
     var movieID : Int?
     var moviePosterPath: String?
     var movie : Movie?
     var blurEffectView : UIVisualEffectView?
-    @IBOutlet weak var backgroundImageView: UIImageView!
     
-    weak var modalDelegate: ModalViewControllerDelegate?
     var isFavorite = false
     var isWatchlist = false
+    
+    weak var modalDelegate: ModalViewControllerDelegate?
+    
     
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackgroundView()
+        
         if let id = movieID {
             if case let movie as Movie = Utilities.objectSavedInCoreData(id, entity: CoreDataEntityNames.Movie) {
                 self.movie = movie
             } else {
                 getMovieDetailsById(id)
             }
-            
         }
+        
+        headerView.configView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,12 +53,6 @@ class MovieDetailViewController: UIViewController {
         checkIfWatched()
     }
 }
-
-//MARK: CoreData Methods 
-extension MovieDetailViewController {
-    
-}
-
 
 //MARK: Networking Methods
 extension MovieDetailViewController {
@@ -66,7 +67,7 @@ extension MovieDetailViewController {
                     }
                 }
                 performUIUpdatesOnMain {
-                    self.tableView.reloadData()
+                    self.headerView.likeBtn.selected = self.isFavorite
                 }
             } else {
                 print(error)
@@ -85,7 +86,7 @@ extension MovieDetailViewController {
                     }
                 }
                 performUIUpdatesOnMain {
-                    self.tableView.reloadData()
+                   self.headerView.watchBtn.selected = self.isWatchlist
                 }
             } else {
                 print(error)
@@ -125,17 +126,17 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("HeaderSectionCell") as! MovieDetailCellForHeaderSection
-            cell.likeBtn.selected = isFavorite
-            cell.watchBtn.selected = isWatchlist
-            cell.configCell()
-            return cell
-        case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier("TitleSectionCell") as! MovieDetailCellForTitleSection
+            cell.configCell()
             cell.titleLbl.text = movie?.title
             cell.ratingLbl.text = "Rating: \(movie!.voteAverage!)"
             cell.runtimeLbl.text = "Runtime: \(movie!.runtime!)mins"
             cell.releaseDateLbl.text = "Year: \(movie!.releaseDate!)"
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCellWithIdentifier("OverviewSectionCell") as! MovieDetailCellForOverview
+            cell.configCell()
+            cell.overviewLbl.text = movie?.overview!
             return cell
         default:
             return UITableViewCell()
@@ -145,9 +146,9 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
-            return 44
+            return 130
         case 1:
-            return 100
+            return movie!.overview!.heightWithConstrainedWidth(Utilities.screenSize.width - 36, font: UIFont.systemFontOfSize(15))
         default:
             return 0
         }
@@ -161,7 +162,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return view.frame.height - 100
+            return view.frame.height - 150
         }
         return 0
     }
@@ -169,7 +170,23 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     
     
     func  scrollViewDidScroll(scrollView: UIScrollView) {
-        blurEffectView?.alpha = min(1,scrollView.contentOffset.y / 200)
+        performUIUpdatesOnMain { 
+            let offsetY = scrollView.contentOffset.y
+            let cells = self.tableView.visibleCells
+            self.blurEffectView?.alpha = min(0.8,offsetY / 200)
+            if offsetY > 40 && !self.headerView.isHiding {
+                self.hideHeaderView()
+                for cell in cells {
+                    cell.backgroundColor = UIColor.clearColor()
+                }
+            } else if offsetY <= 40 && self.headerView.isHiding {
+                self.showHeaderView()
+                for cell in cells {
+                    cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+                }
+            }
+        }
+        
     }
     
     @IBAction func backButtonClicked(sender: AnyObject) {
@@ -186,7 +203,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
                 if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                     self.isWatchlist = shouldWatchlist
                     performUIUpdatesOnMain {
-                        self.tableView.reloadData()
+                        self.headerView.watchBtn.selected = self.isWatchlist
                     }
                 } else {
                     showAlertViewWith("Oops", error: "Could Not Add to Watched List.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
@@ -205,7 +222,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
                 if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                     self.isFavorite = shouldFavorite
                     performUIUpdatesOnMain {
-                        self.tableView.reloadData()
+                        self.headerView.likeBtn.selected = self.isFavorite
                     }
                 } else {
                     showAlertViewWith("Oops", error: "Could Not Like It.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
@@ -235,6 +252,31 @@ extension MovieDetailViewController {
             blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
             blurEffectView.alpha = 0
             view.addSubview(blurEffectView)
+        }
+    }
+    
+    private func hideHeaderView() {
+        headerView.isHiding = true
+        var frame = headerView.frame
+        frame.origin.y -= frame.size.height
+        UIView.animateWithDuration(0.2, animations: { 
+            self.headerView.frame = frame
+            self.headerView.alpha = 0
+            }) { (finished) in
+                if finished {
+                    
+                }
+        }
+    }
+    
+    private func showHeaderView() {
+        headerView.isHiding = false
+        var frame = headerView.frame
+        frame.origin.y += frame.size.height
+        
+        UIView.animateWithDuration(0.2) {
+            self.headerView.frame = frame
+            self.headerView.alpha = 1
         }
     }
 }

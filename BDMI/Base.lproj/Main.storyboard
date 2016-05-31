@@ -197,7 +197,7 @@
                             <constraint firstItem="cgC-RJ-6QJ" firstAttribute="top" secondItem="vuK-28-Bs4" secondAttribute="bottom" id="ohK-LW-9Sl"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Movies" image="warn_high.png" id="ldr-4t-9jR"/>
+                    <tabBarItem key="tabBarItem" title="Movies" image="movie" selectedImage="movie" id="ldr-4t-9jR"/>
                     <navigationItem key="navigationItem" title="Movies" id="FTE-jP-CSG"/>
                     <connections>
                         <outlet property="tableView" destination="vuK-28-Bs4" id="bRr-aX-xRk"/>
@@ -207,7 +207,7 @@
             </objects>
             <point key="canvasLocation" x="2813" y="253"/>
         </scene>
-        <!--Collections-->
+        <!--Discover-->
         <scene sceneID="ESW-1h-OLc">
             <objects>
                 <viewController id="HV2-ex-abM" customClass="BDMIMovieCollectionsViewController" customModule="BDMI" customModuleProvider="target" sceneMemberID="viewController">
@@ -284,7 +284,7 @@
                             <constraint firstItem="a2r-fC-JdB" firstAttribute="top" secondItem="u01-Ye-9bo" secondAttribute="bottom" id="vnS-sv-9B5"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Collections" image="cancel_high" id="Xa6-jv-ZcK"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="discover" selectedImage="discover_selected" id="Xa6-jv-ZcK"/>
                     <connections>
                         <outlet property="tableView" destination="a2r-fC-JdB" id="fJK-Hz-Xza"/>
                     </connections>
@@ -312,56 +312,8 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="HeaderSectionCell" rowHeight="55" id="L3v-Zs-Cpp" customClass="MovieDetailCellForHeaderSection" customModule="BDMI" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="55"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L3v-Zs-Cpp" id="1FC-O2-Nbs">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="55"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUg-Ta-TNh">
-                                                    <rect key="frame" x="8" y="16" width="24" height="24"/>
-                                                    <state key="normal" image="back"/>
-                                                    <state key="highlighted" image="back_highlight"/>
-                                                    <connections>
-                                                        <action selector="backButtonClicked:" destination="LV1-V6-E53" eventType="touchUpInside" id="cZq-Mu-PWc"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oOI-AP-tQU">
-                                                    <rect key="frame" x="288" y="16" width="24" height="24"/>
-                                                    <state key="normal" image="watch"/>
-                                                    <state key="selected" image="watched"/>
-                                                    <connections>
-                                                        <action selector="watchButtonClicked:" destination="LV1-V6-E53" eventType="touchUpInside" id="hVp-XU-swB"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZK-Ck-vIO">
-                                                    <rect key="frame" x="568" y="16" width="24" height="24"/>
-                                                    <state key="normal" image="like"/>
-                                                    <state key="selected" image="liked"/>
-                                                    <connections>
-                                                        <action selector="likeButtonClicked:" destination="LV1-V6-E53" eventType="touchUpInside" id="7X0-sx-VV7"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstItem="rZK-Ck-vIO" firstAttribute="centerY" secondItem="1FC-O2-Nbs" secondAttribute="centerY" id="8Jw-lj-uai"/>
-                                                <constraint firstItem="oOI-AP-tQU" firstAttribute="centerX" secondItem="1FC-O2-Nbs" secondAttribute="centerX" id="Tlg-OT-DLs"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="rZK-Ck-vIO" secondAttribute="trailing" id="Wvy-Hj-0fC"/>
-                                                <constraint firstItem="zUg-Ta-TNh" firstAttribute="centerY" secondItem="1FC-O2-Nbs" secondAttribute="centerY" id="k6I-VB-CdN"/>
-                                                <constraint firstItem="oOI-AP-tQU" firstAttribute="centerY" secondItem="1FC-O2-Nbs" secondAttribute="centerY" id="kPD-yq-Z7T"/>
-                                                <constraint firstAttribute="leadingMargin" secondItem="zUg-Ta-TNh" secondAttribute="leading" id="zvz-kZ-VhA"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="likeBtn" destination="rZK-Ck-vIO" id="eo4-WT-YhC"/>
-                                            <outlet property="watchBtn" destination="oOI-AP-tQU" id="Zhy-WM-oSJ"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TitleSectionCell" rowHeight="115" id="89U-2x-lrB" customClass="MovieDetailCellForTitleSection" customModule="BDMI" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="83" width="600" height="115"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="115"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="89U-2x-lrB" id="W3u-z6-JlM">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="115"/>
@@ -411,12 +363,80 @@
                                             <outlet property="titleLbl" destination="Ni3-cz-jws" id="T21-cm-Jrm"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OverviewSectionCell" rowHeight="108" id="UBy-Fj-Dmg" customClass="MovieDetailCellForOverview" customModule="BDMI" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="143" width="600" height="108"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UBy-Fj-Dmg" id="wMX-we-6FM">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="108"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O44-9Q-4F3">
+                                                    <rect key="frame" x="26" y="8" width="548" height="92"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="topMargin" secondItem="O44-9Q-4F3" secondAttribute="top" id="9CM-yV-upp"/>
+                                                <constraint firstItem="O44-9Q-4F3" firstAttribute="leading" secondItem="wMX-we-6FM" secondAttribute="leadingMargin" constant="18" id="gfJ-CA-lUQ"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="O44-9Q-4F3" secondAttribute="bottom" id="sjR-cb-hdu"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="O44-9Q-4F3" secondAttribute="trailing" constant="18" id="x93-mV-LMV"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="overviewLbl" destination="O44-9Q-4F3" id="70G-T7-tya"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="LV1-V6-E53" id="IV6-Fb-FpY"/>
                                     <outlet property="delegate" destination="LV1-V6-E53" id="QSh-NI-GWc"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Qi-Xa-XGn" customClass="MovieDetailHeaderSectionView" customModule="BDMI" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="600" height="55"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hUL-rx-8zL">
+                                        <rect key="frame" x="26" y="16" width="24" height="24"/>
+                                        <state key="normal" image="back"/>
+                                        <state key="highlighted" image="back_highlight"/>
+                                        <connections>
+                                            <action selector="backButtonClicked:" destination="LV1-V6-E53" eventType="touchUpInside" id="Q1z-Jj-DCm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5Y-ee-R2m">
+                                        <rect key="frame" x="497" y="16" width="24" height="24"/>
+                                        <state key="normal" image="watch"/>
+                                        <state key="selected" image="watched"/>
+                                        <connections>
+                                            <action selector="watchButtonClicked:" destination="LV1-V6-E53" eventType="touchUpInside" id="sNv-Ww-KNt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aG-ME-JMR">
+                                        <rect key="frame" x="550" y="16" width="24" height="24"/>
+                                        <state key="normal" image="like"/>
+                                        <state key="selected" image="liked"/>
+                                        <connections>
+                                            <action selector="likeButtonClicked:" destination="LV1-V6-E53" eventType="touchUpInside" id="hZY-CH-PdB"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="5aG-ME-JMR" firstAttribute="leading" secondItem="X5Y-ee-R2m" secondAttribute="trailing" constant="29" id="Aj0-uf-u6z"/>
+                                    <constraint firstItem="X5Y-ee-R2m" firstAttribute="centerY" secondItem="0Qi-Xa-XGn" secondAttribute="centerY" id="OQg-xH-qLo"/>
+                                    <constraint firstItem="hUL-rx-8zL" firstAttribute="leading" secondItem="0Qi-Xa-XGn" secondAttribute="leading" constant="26" id="PVO-hK-9iI"/>
+                                    <constraint firstAttribute="height" constant="55" id="ad4-F4-Oki"/>
+                                    <constraint firstAttribute="trailing" secondItem="5aG-ME-JMR" secondAttribute="trailing" constant="26" id="c4t-qA-hJU"/>
+                                    <constraint firstItem="5aG-ME-JMR" firstAttribute="centerY" secondItem="0Qi-Xa-XGn" secondAttribute="centerY" id="xLk-ME-ex2"/>
+                                    <constraint firstItem="hUL-rx-8zL" firstAttribute="centerY" secondItem="0Qi-Xa-XGn" secondAttribute="centerY" id="y5B-WK-5Rf"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="likeBtn" destination="5aG-ME-JMR" id="CXq-o6-o1T"/>
+                                    <outlet property="watchBtn" destination="X5Y-ee-R2m" id="Iho-PH-8gK"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -425,7 +445,10 @@
                             <constraint firstItem="iXj-gB-XNh" firstAttribute="top" secondItem="unK-xV-yEq" secondAttribute="bottom" id="8UA-Dz-r1U"/>
                             <constraint firstItem="unK-xV-yEq" firstAttribute="top" secondItem="bDG-j5-fiT" secondAttribute="bottom" id="9CI-2g-yrW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BD0-2a-kWr" secondAttribute="trailing" constant="-20" id="B07-5I-jXQ"/>
+                            <constraint firstItem="0Qi-Xa-XGn" firstAttribute="top" secondItem="bDG-j5-fiT" secondAttribute="bottom" id="FWl-1m-a2r"/>
+                            <constraint firstItem="0Qi-Xa-XGn" firstAttribute="leading" secondItem="OpI-dd-Z30" secondAttribute="leadingMargin" constant="-20" id="HXk-UO-r1u"/>
                             <constraint firstItem="BD0-2a-kWr" firstAttribute="leading" secondItem="OpI-dd-Z30" secondAttribute="leadingMargin" constant="-20" id="PvV-eV-nIs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0Qi-Xa-XGn" secondAttribute="trailing" constant="-20" id="Ql7-9U-48z"/>
                             <constraint firstItem="BD0-2a-kWr" firstAttribute="top" secondItem="bDG-j5-fiT" secondAttribute="bottom" id="UnG-t8-0mP"/>
                             <constraint firstItem="iXj-gB-XNh" firstAttribute="top" secondItem="BD0-2a-kWr" secondAttribute="bottom" id="cf3-kJ-wef"/>
                         </constraints>
@@ -433,6 +456,7 @@
                     <navigationItem key="navigationItem" id="F6k-wi-RcY"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="BD0-2a-kWr" id="yad-XR-sNe"/>
+                        <outlet property="headerView" destination="0Qi-Xa-XGn" id="2N9-hO-MRu"/>
                         <outlet property="tableView" destination="unK-xV-yEq" id="XtV-11-OBV"/>
                     </connections>
                 </viewController>
@@ -463,10 +487,11 @@
     <resources>
         <image name="back" width="24" height="24"/>
         <image name="back_highlight" width="24" height="24"/>
-        <image name="cancel_high" width="3" height="3"/>
+        <image name="discover" width="24" height="24"/>
+        <image name="discover_selected" width="24" height="24"/>
         <image name="like" width="24" height="24"/>
         <image name="liked" width="24" height="24"/>
-        <image name="warn_high.png" width="3" height="3"/>
+        <image name="movie" width="24" height="24"/>
         <image name="watch" width="24" height="24"/>
         <image name="watched" width="24" height="24"/>
     </resources>

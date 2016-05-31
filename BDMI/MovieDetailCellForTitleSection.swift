@@ -14,4 +14,8 @@ class MovieDetailCellForTitleSection: UITableViewCell {
     @IBOutlet weak var runtimeLbl: UILabel!
     @IBOutlet weak var ratingLbl: UILabel!
     @IBOutlet weak var releaseDateLbl: UILabel!
+    
+    func configCell() {
+        self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+    }
 }
