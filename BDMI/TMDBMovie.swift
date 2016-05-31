@@ -46,6 +46,11 @@ struct TMDBMovie {
         }
     }
     
+    init(movie: Movie) {
+        title = movie.title!
+        id = Int(movie.id!)
+    }
+    
     static func moviesFromResults(results: [[String:AnyObject]]) -> [TMDBMovie] {
         
         var movies = [TMDBMovie]()

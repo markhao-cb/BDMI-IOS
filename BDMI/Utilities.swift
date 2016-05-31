@@ -9,6 +9,7 @@
 import Foundation
 import JCAlertView
 import NVActivityIndicatorView
+import CoreData
 
 struct Utilities {
     
@@ -39,6 +40,61 @@ struct Utilities {
         case AlertViewWithOneButton
         case AlertViewWithTwoButtons
     }
+    
+    //CoreData
+    static func objectSavedInCoreData(id: Int, entity: String) -> AnyObject? {
+        let fetchRequest = NSFetchRequest(entityName: entity)
+        let predicate = NSPredicate(format: "id = %d", id)
+        fetchRequest.predicate = predicate
+        do {
+            let result = try Utilities.appDelegate.stack.context.executeFetchRequest(fetchRequest)
+            return result.first
+        } catch {
+            return nil
+        }
+    }
+    
+    static func createNewMovie(movie: TMDBMovie) -> Movie {
+        let id = movie.id
+        let title = movie.title
+        var posterPath: NSURL? = nil
+        if let path = movie.posterPath {
+            posterPath = TMDBClient.sharedInstance.createUrlForImages(TMDBClient.PosterSizes.RowPoster, filePath: path)
+        }
+        let overview = movie.overview
+        let voteAverage = movie.voteAverage
+        let voteCount = movie.voteCount
+        let runtime = movie.runtime
+        let popularity = movie.popularity
+        let releaseDate = movie.releaseYear
+        
+        let newMovie = Movie(id: id, title: title, posterPath: posterPath, overview: overview, voteAverage: voteAverage, voteCount: voteCount, runtime: runtime, releaseDate: releaseDate, popularity: popularity, context: Utilities.appDelegate.stack.context)
+        print("New Movie Created!")
+        
+        // Create Collection From Movie Details
+        if let collectionData = movie.belongsToCollection {
+            let collection = TMDBCollection.init(dictionary: collectionData)
+            if let savedCollection = Utilities.objectSavedInCoreData(collection.id, entity: CoreDataEntityNames.Collection) as? Collection {
+                savedCollection.addMoviesObject(newMovie)
+            } else {
+                let newCollection = createNewCollection(collection)
+                newCollection.addMoviesObject(newMovie)
+            }
+        }
+        return newMovie
+    }
+    
+    static func createNewCollection(collection: TMDBCollection) -> Collection {
+        let name = collection.name
+        let id = collection.id
+        var backdropPath: NSURL? = nil
+        if let path = collection.backdropPath {
+            backdropPath = TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: path)
+        }
+        let newCollection = Collection(name: name, id: id, backdropPath: backdropPath, context: Utilities.appDelegate.stack.context)
+        print("New Collection Created!")
+        return newCollection
+    }
 }
 
 
@@ -59,11 +115,6 @@ func showAlertViewWith(title: String, error: String, type: Utilities.AlertViewTy
         JCAlertView.showTwoButtonsWithTitle(title, message: error, buttonType: .Default, buttonTitle: firstButtonTitle, click: firstButtonHandler, buttonType: .Cancel, buttonTitle: secondButtonTitle, click: secondButtonHandler)
         break
     }
-}
-
-func configKingfisher(imageView: UIImageView) {
-    imageView.kf_showIndicatorWhenLoading = true
-    imageView.kf_indicator?.activityIndicatorViewStyle = .Gray
 }
 
 

@@ -24,6 +24,7 @@ class BDMIMovieViewController: UIViewController {
     var popularMovies : [TMDBMovie]?
     var topRatedMovies : [TMDBMovie]?
     var storedOffsets = [Int: CGFloat]()
+    var scrollViewsetted = false
     
     var tr_presentTransition: TRViewControllerTransitionDelegate?
     
@@ -36,6 +37,7 @@ class BDMIMovieViewController: UIViewController {
         scrollView?.pagingEnabled = true
         tableView.tableHeaderView = scrollView!
         
+        
         loadData()
         addRefreshControl()
     }
@@ -46,6 +48,8 @@ extension BDMIMovieViewController {
     
     private func addRefreshControl() {
         let refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = UIColor.blackColor()
+        refreshControl.tintColor = UIColor.whiteColor()
         refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl)
     }
@@ -82,6 +86,7 @@ extension BDMIMovieViewController {
             }
         }
         scrollView!.contentSize = CGSize(width: 4 * width, height: height)
+        scrollViewsetted = true
         NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
     }
     
@@ -155,7 +160,7 @@ extension BDMIMovieViewController : UITableViewDelegate, UITableViewDataSource {
 
 
 //MARK: UICollectionView Delegate and DataSource
-extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDataSource {
+extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDataSource, ModalTransitionDelegate {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {
@@ -260,8 +265,11 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
             break
         default: break
         }
-        movieDetailVC.movie = movie
-        
+        movieDetailVC.movieID = movie?.id
+        movieDetailVC.moviePosterPath = movie?.posterPath
+        movieDetailVC.modalDelegate = self
+        tr_presentViewController(movieDetailVC, method: TRPresentTransitionMethod.Fade)
+
     }
 }
 
@@ -282,6 +290,7 @@ extension BDMIMovieViewController {
                     return
                 }
                 self.nowShowingMovies = result!
+                self.perfetchMovieDetails(result!)
                 self.tableView.reloadData()
                 print("Load Now Showing Movies Successfully")
             })
@@ -311,7 +320,8 @@ extension BDMIMovieViewController {
                     return
                 }
                 self.popularMovies = result
-                self.setupScrollView()
+                if !self.scrollViewsetted {self.setupScrollView()}
+                self.perfetchMovieDetails(result!)
                 self.tableView.reloadData()
                 print("Load Popular Movies Successfully")
             })
@@ -326,6 +336,7 @@ extension BDMIMovieViewController {
                     return
                 }
                 self.topRatedMovies = result
+                self.perfetchMovieDetails(result!)
                 self.tableView.reloadData()
                 print("Load Top Rated Movies Successfully")
             })
@@ -334,75 +345,25 @@ extension BDMIMovieViewController {
     
     private func perfetchMovieDetails(movies: [TMDBMovie]) {
         for movie in movies {
-            if let _ = savedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {} else {
+            if let _ = Utilities.objectSavedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {} else {
                 TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (result, error) in
                     if let error = error {
                         print("Prefetch Failed. \(error.domain)")
                     } else {
-                        self.createNewMovie(result!)
+                        Utilities.createNewMovie(result!)
                     }
                 })
             }
         }
+        do {
+            try Utilities.appDelegate.stack.context.save()
+        } catch {
+            let error = error as NSError
+            print("Save failed. Error: \(error.localizedDescription)")
+        }
     }
 }
 
-//MARK: CoreData Methods
-extension BDMIMovieViewController {
-    private func savedInCoreData(id: Int, entity: String) -> AnyObject? {
-        let fetchRequest = NSFetchRequest(entityName: entity)
-        let predicate = NSPredicate(format: "id = %d", id)
-        fetchRequest.predicate = predicate
-        do {
-            let result = try Utilities.appDelegate.stack.context.executeFetchRequest(fetchRequest)
-            return result.first
-        } catch {
-            return nil
-        }
-    }
-    
-    private func createNewMovie(movie: TMDBMovie) -> Movie {
-        let id = movie.id
-        let title = movie.title
-        var posterPath: NSURL? = nil
-        if let path = movie.posterPath {
-            posterPath = TMDBClient.sharedInstance.createUrlForImages(TMDBClient.PosterSizes.RowPoster, filePath: path)
-        }
-        let overview = movie.overview
-        let voteAverage = movie.voteAverage
-        let voteCount = movie.voteCount
-        let runtime = movie.runtime
-        let popularity = movie.popularity
-        let releaseDate = movie.releaseYear
-        
-        let newMovie = Movie(id: id, title: title, posterPath: posterPath, overview: overview, voteAverage: voteAverage, voteCount: voteCount, runtime: runtime, releaseDate: releaseDate, popularity: popularity, context: Utilities.appDelegate.stack.context)
-        print("New Movie Created!")
-        
-        // Create Collection From Movie Details
-        if let collectionData = movie.belongsToCollection {
-            let collection = TMDBCollection.init(dictionary: collectionData)
-            if let savedCollection = savedInCoreData(collection.id, entity: CoreDataEntityNames.Collection) as? Collection {
-                savedCollection.addMoviesObject(newMovie)
-            } else {
-                let newCollection = createNewCollection(collection)
-                newCollection.addMoviesObject(newMovie)
-            }
-        }
-        return newMovie
-    }
-    
-    private func createNewCollection(collection: TMDBCollection) -> Collection {
-        let name = collection.name
-        let id = collection.id
-        var backdropPath: NSURL? = nil
-        if let path = collection.backdropPath {
-            backdropPath = TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: path)
-        }
-        let newCollection = Collection(name: name, id: id, backdropPath: backdropPath, context: Utilities.appDelegate.stack.context)
-        print("New Collection Created!")
-        return newCollection
-    }
-}
 
 //MARK: Helper Methods
 extension BDMIMovieViewController {

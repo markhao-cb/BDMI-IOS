@@ -202,6 +202,29 @@ extension TMDBClient {
         }
     }
     
+    func getFavoriteMovies(completionHandlerForFavMovies: (result: [TMDBMovie]?, error: NSError?) -> Void) {
+        
+        let parameters = [TMDBClient.ParameterKeys.SessionID: TMDBClient.sharedInstance.sessionID!]
+        var mutableMethod: String = Methods.AccountIDFavoriteMovies
+        mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance.userID!))!
+        
+        taskForGETMethod(mutableMethod, parameters: parameters) { (results, error) in
+            
+            if let error = error {
+                completionHandlerForFavMovies(result: nil, error: error)
+            } else {
+                
+                if let results = results[TMDBClient.JSONResponseKeys.MovieResults] as? [[String:AnyObject]] {
+                    
+                    let movies = TMDBMovie.moviesFromResults(results)
+                    completionHandlerForFavMovies(result: movies, error: nil)
+                } else {
+                    completionHandlerForFavMovies(result: nil, error: NSError(domain: "getFavoriteMovies parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getFavoriteMovies"]))
+                }
+            }
+        }
+    }
+    
     
     func getWatchlistMovies(completionHandlerForWatchlist: (result: [TMDBMovie]?, error: NSError?) -> Void) {
         
@@ -268,12 +291,12 @@ extension TMDBClient {
     
     // MARK: POST Convenience Methods
     
-    func postToFavorites(movie: TMDBMovie, favorite: Bool, completionHandlerForFavorite: (result: Int?, error: NSError?) -> Void)  {
+    func postToFavorites(movieID: Int, favorite: Bool, completionHandlerForFavorite: (result: Int?, error: NSError?) -> Void)  {
         
         let parameters = [TMDBClient.ParameterKeys.SessionID : TMDBClient.sharedInstance.sessionID!]
         var mutableMethod: String = Methods.AccountIDFavorite
         mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance.userID!))!
-        let jsonBody = "{\"\(TMDBClient.JSONBodyKeys.MediaType)\": \"movie\",\"\(TMDBClient.JSONBodyKeys.MediaID)\": \"\(movie.id)\",\"\(TMDBClient.JSONBodyKeys.Favorite)\": \(favorite)}"
+        let jsonBody = "{\"\(TMDBClient.JSONBodyKeys.MediaType)\": \"movie\",\"\(TMDBClient.JSONBodyKeys.MediaID)\": \"\(movieID)\",\"\(TMDBClient.JSONBodyKeys.Favorite)\": \(favorite)}"
         
         taskForPOSTMethod(mutableMethod, parameters: parameters, jsonBody: jsonBody) { (results, error) in
             
@@ -289,12 +312,12 @@ extension TMDBClient {
         }
     }
     
-    func postToWatchlist(movie: TMDBMovie, watchlist: Bool, completionHandlerForWatchlist: (result: Int?, error: NSError?) -> Void) {
+    func postToWatchlist(movieID: Int, watchlist: Bool, completionHandlerForWatchlist: (result: Int?, error: NSError?) -> Void) {
         
         let parameters = [TMDBClient.ParameterKeys.SessionID : TMDBClient.sharedInstance.sessionID!]
         var mutableMethod: String = Methods.AccountIDWatchlist
         mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance.userID!))!
-        let jsonBody = "{\"\(TMDBClient.JSONBodyKeys.MediaType)\": \"movie\",\"\(TMDBClient.JSONBodyKeys.MediaID)\": \"\(movie.id)\",\"\(TMDBClient.JSONBodyKeys.Watchlist)\": \(watchlist)}"
+        let jsonBody = "{\"\(TMDBClient.JSONBodyKeys.MediaType)\": \"movie\",\"\(TMDBClient.JSONBodyKeys.MediaID)\": \"\(movieID)\",\"\(TMDBClient.JSONBodyKeys.Watchlist)\": \(watchlist)}"
         
         taskForPOSTMethod(mutableMethod, parameters: parameters, jsonBody: jsonBody) { (results, error) in
             
