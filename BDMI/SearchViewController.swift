@@ -22,7 +22,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createPlaceHolderLabel("No Results.")
+        createPlaceHolderLabel("No Results")
         if movieSearchBar.text == "" {
             movieTableView.hidden = true
         }

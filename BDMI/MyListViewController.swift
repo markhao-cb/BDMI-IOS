@@ -23,8 +23,10 @@ class MyListViewController: UIViewController {
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        createPlaceHolderLabel("No Results.")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain, target: self, action: #selector(logoutBtnClicked))
+        createPlaceHolderLabel("No Results")
+        let barItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain, target: self, action: #selector(logoutBtnClicked))
+        barItem.tintColor = UIColor.redColor()
+        navigationItem.rightBarButtonItem = barItem
     }
     
     override func viewWillAppear(animated: Bool) {

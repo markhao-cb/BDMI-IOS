@@ -26,7 +26,7 @@ class BDMIMovieCollectionsViewController: UIViewController {
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        createPlaceHolderLabel("Fetching...Come again later.")
+        createPlaceHolderLabel("Fetching...Come again later")
         fetchCollection()
         addRefreshControl()
     }
