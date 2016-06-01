@@ -33,16 +33,11 @@ class BDMIMovieViewController: UIViewController {
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadData()
         scrollView = UIScrollView(frame: CGRectMake(0,0,Utilities.screenSize.width,200))
         scrollView?.pagingEnabled = true
         tableView.tableHeaderView = scrollView!
         addRefreshControl()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        loadData()
     }
 }
 
@@ -51,8 +46,6 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
     
     private func addRefreshControl() {
         let refreshControl = UIRefreshControl()
-        refreshControl.backgroundColor = UIColor.blackColor()
-        refreshControl.tintColor = UIColor.whiteColor()
         refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl)
     }
@@ -79,12 +72,10 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
                 imageView.userInteractionEnabled = true
                 let label = UILabel(frame: CGRectMake(20, height - 50, width - 40, 40))
                 configLabel(label)
-                label.text = movie.title
+                changeTextForLabel(label, text: movie.title)
                 imageView.addSubview(label)
                 scrollView!.addSubview(imageView)
-                imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: backdropPath), placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
-//                    self.tableView.reloadData()
-                })
+                imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: backdropPath), placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: nil)
                 let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
                 tap.delegate = self
                 imageView.addGestureRecognizer(tap)
@@ -94,7 +85,7 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
         }
         scrollView!.contentSize = CGSize(width: 4 * width, height: height)
         scrollViewsetted = true
-        NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
+        NSTimer.scheduledTimerWithTimeInterval(8, target: self, selector: #selector(moveToNextPage), userInfo: nil, repeats: true)
     }
     
     func imageTapped(sender: UITapGestureRecognizer) {
@@ -126,6 +117,7 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
         label.textAlignment = .Right
         label.font = UIFont.boldSystemFontOfSize(19)
         label.textColor = UIColor.whiteColor()
+        label.backgroundColor = Utilities.backgroundColor
     }
 }
 
@@ -310,7 +302,7 @@ extension BDMIMovieViewController {
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.NowPlaying) { (result, error) in
             performUIUpdatesOnMain({ 
                 guard (error == nil) else {
-                    showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
                 self.nowShowingMovies = result!
@@ -327,7 +319,7 @@ extension BDMIMovieViewController {
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.UpComing) { (result, error) in
             performUIUpdatesOnMain({
                 guard (error == nil) else {
-                    showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
                 self.upcomingMovies = result
@@ -344,7 +336,7 @@ extension BDMIMovieViewController {
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.Popular) { (result, error) in
             performUIUpdatesOnMain({
                 guard (error == nil) else {
-                    showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
                 self.popularMovies = result
@@ -362,7 +354,7 @@ extension BDMIMovieViewController {
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.TopRated) { (result, error) in
             performUIUpdatesOnMain({
                 guard (error == nil) else {
-                    showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
                 self.topRatedMovies = result
@@ -431,6 +423,7 @@ extension BDMIMovieViewController {
                 })
             }
         }
+        //Save context
         do {
             try Utilities.appDelegate.stack.context.save()
         } catch {

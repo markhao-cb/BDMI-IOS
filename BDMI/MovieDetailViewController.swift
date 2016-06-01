@@ -153,7 +153,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
             return 130
         case 1:
             if let overview = movie?.overview {
-                return overview.heightWithConstrainedWidth(Utilities.screenSize.width - 40, font: UIFont.systemFontOfSize(16))
+                return overview.heightWithConstrainedWidth(Utilities.screenSize.width - 40, font: UIFont.systemFontOfSize(16)) + 20
             } else {
                 return 0
             }
@@ -171,7 +171,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return view.frame.height - 150
+            return view.frame.height - 130
         }
         return 0
     }

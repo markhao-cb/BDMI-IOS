@@ -25,12 +25,13 @@ class BDMIMovieCollectionsViewController: UIViewController {
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchCollection()
         addRefreshControl()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        fetchCollection()
+//        fetchCollection()
     }
 }
 
@@ -64,10 +65,11 @@ extension BDMIMovieCollectionsViewController {
             performUIUpdatesOnMain({
                 NVActivityIndicatorView.hideHUDForView(self.view)
                 let collections = result.finalResult as? [Collection]
-                self.collections = Array(Set(collections!))
-                self.tableView.reloadData()
+                if collections!.count > 0 {
+                    self.collections = Array(Set(collections!))
+                    self.tableView.reloadData()
+                }
             })
-           
         }
         
         Utilities.appDelegate.stack.context.performBlock { 
@@ -94,7 +96,6 @@ extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableVie
             return 0
         }
     }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BDMIMovieCollectionsTableViewCell") as! BDMIMovieCollectionsTableViewCell
         cell.configCell()
@@ -138,8 +139,3 @@ extension BDMIMovieCollectionsViewController {
         refreshControl.endRefreshing()
     }
 }
-
-
-
-
-

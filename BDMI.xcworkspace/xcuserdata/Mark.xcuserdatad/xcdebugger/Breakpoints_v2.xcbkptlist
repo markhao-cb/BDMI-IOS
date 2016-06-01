@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BDMI/BDMIMovieViewController.swift"
-            timestampString = "486429423.681858"
+            timestampString = "486459042.203344"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "imageTapped(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -54,16 +54,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BDMI/BDMIMovieCollectionsViewController.swift"
-            timestampString = "486435609.50518"
+            timestampString = "486456984.480198"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "fetchCollection()"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "scrollViewDidScroll(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

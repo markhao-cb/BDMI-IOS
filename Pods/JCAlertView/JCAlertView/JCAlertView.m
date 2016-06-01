@@ -634,18 +634,18 @@ buttonType ButtonTitle:(NSString *)buttonTitle Click:(clickHandle)click ButtonTy
     UIImage *highImage = nil;
     switch (buttonType) {
         case JCAlertViewButtonTypeDefault:
-            normalImage = [UIImage imageNamed:@"JCAlertView.bundle/default_nor"];
-            highImage = [UIImage imageNamed:@"JCAlertView.bundle/default_high"];
+            normalImage = [UIImage imageNamed:@"default_nor"];
+            highImage = [UIImage imageNamed:@"default_high"];
             textColor = JCColor(255, 255, 255);
             break;
         case JCAlertViewButtonTypeCancel:
-            normalImage = [UIImage imageNamed:@"JCAlertView.bundle/cancel_nor"];
-            highImage = [UIImage imageNamed:@"JCAlertView.bundle/cancel_high"];
+            normalImage = [UIImage imageNamed:@"cancel_nor"];
+            highImage = [UIImage imageNamed:@"cancel_high"];
             textColor = JCColor(255, 255, 255);
             break;
         case JCAlertViewButtonTypeWarn:
-            normalImage = [UIImage imageNamed:@"JCAlertView.bundle/warn_nor"];
-            highImage = [UIImage imageNamed:@"JCAlertView.bundle/warn_high"];
+            normalImage = [UIImage imageNamed:@"warn_nor"];
+            highImage = [UIImage imageNamed:@"warn_high"];
             textColor = JCColor(255, 255, 255);
             break;
     }

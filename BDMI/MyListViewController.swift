@@ -20,14 +20,20 @@ class MyListViewController: UIViewController {
     
     var tr_presentTransition: TRViewControllerTransitionDelegate?
     
-    //Life Circle
+    //MARK: Life Circle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain, target: self, action: #selector(logoutBtnClicked))
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         getFavoriteMovies()
         getWatchedMovies()
     }
     
-    //IBAction
+    //MARK: IBAction
     @IBAction func segmentControlChanged(sender: AnyObject) {
         UIView.animateWithDuration(0.2, animations: { 
             self.tableView.alpha = 0
@@ -39,7 +45,22 @@ class MyListViewController: UIViewController {
                     })
                 }
         }
-        
+    }
+    
+    func logoutBtnClicked() {
+        resetUserInfo()
+        let loginVC = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
+        self.presentViewController(loginVC, animated: true, completion: nil)
+    }
+    
+    //MARK: Helper
+    private func resetUserInfo() {
+        TMDBClient.sharedInstance.sessionID = nil
+        TMDBClient.sharedInstance.userID = nil
+        TMDBClient.sharedInstance.requestToken = nil
+        Utilities.userDefault.removeObjectForKey("UserID")
+        Utilities.userDefault.removeObjectForKey("SessionID")
+        Utilities.userDefault.removeObjectForKey("RequestToken")
     }
 }
 
