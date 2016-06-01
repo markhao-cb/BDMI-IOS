@@ -41,6 +41,34 @@ struct Utilities {
         case AlertViewWithOneButton
         case AlertViewWithTwoButtons
     }
+    
+    struct NotificationNames {
+        static let CollectionAddedNotification = "CollectionAdded"
+    }
+}
+
+//MARK: Helper Methods
+extension UIViewController {
+    func changeTextForLabel(label: UILabel, text: String) {
+        label.text = text
+        label.sizeToFit()
+    }
+    
+    func createPlaceHolderLabel(text: String) {
+        let label = UILabel()
+        label.text = text
+        label.textColor = UIColor.grayColor()
+        let font = UIFont.systemFontOfSize(18, weight: UIFontWeightMedium)
+        label.font = font
+        label.sizeToFit()
+        label.center = self.view.center
+        self.view.addSubview(label)
+        self.view.sendSubviewToBack(label)
+    }
+    
+    func getRandomNumber(max: Int) -> Int {
+        return Int(arc4random_uniform(UInt32(max)))
+    }
 }
 
 

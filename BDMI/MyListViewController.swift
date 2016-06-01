@@ -23,28 +23,33 @@ class MyListViewController: UIViewController {
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        createPlaceHolderLabel("No Results.")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain, target: self, action: #selector(logoutBtnClicked))
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        tableView.hidden = true
         getFavoriteMovies()
         getWatchedMovies()
     }
     
     //MARK: IBAction
     @IBAction func segmentControlChanged(sender: AnyObject) {
-        UIView.animateWithDuration(0.2, animations: { 
-            self.tableView.alpha = 0
-            }) { (finished) in
-                if finished {
-                    self.tableView.reloadData()
-                    UIView.animateWithDuration(0.2, animations: { 
-                        self.tableView.alpha = 1
-                    })
-                }
+        if segmentControl.selectedSegmentIndex == 0 {
+            if let favoriteMovies = favoriteMovies {
+                tableView.hidden = (favoriteMovies.count == 0)
+            } else {
+                tableView.hidden = false
+            }
+        } else {
+            if let watchedMovies = watchedMovies {
+                tableView.hidden = (watchedMovies.count == 0)
+            } else {
+                tableView.hidden = false
+            }
         }
+        self.tableView.reloadData()
     }
     
     func logoutBtnClicked() {
@@ -71,6 +76,7 @@ extension MyListViewController {
             performUIUpdatesOnMain({ 
                 if let movies = movies {
                     self.favoriteMovies = movies
+                    self.tableView.hidden = (movies.count == 0)
                     self.tableView.reloadData()
                 } else {
                     print(error)

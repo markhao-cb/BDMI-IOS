@@ -66,20 +66,20 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
             if let backdropPath = movie.backdropPath where !movies.contains(movie) {
                 movies.append(movie)
                 let imageView = UIImageView(frame: CGRectMake(i * width, 0, width, height))
+                configImageView(imageView)
                 imageView.tag = movie.id
                 imageView.restorationIdentifier = movie.posterPath
-                imageView.contentMode = .ScaleAspectFill
-                imageView.userInteractionEnabled = true
                 let label = UILabel(frame: CGRectMake(20, height - 50, width - 40, 40))
                 configLabel(label)
                 changeTextForLabel(label, text: movie.title)
                 imageView.addSubview(label)
                 scrollView!.addSubview(imageView)
-                imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: backdropPath), placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: nil)
-                let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-                tap.delegate = self
-                imageView.addGestureRecognizer(tap)
-                
+                NVActivityIndicatorView.showHUDAddedTo(imageView)
+                imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: backdropPath), placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                    performUIUpdatesOnMain({
+                        NVActivityIndicatorView.hideHUDForView(imageView)
+                    })
+                })
                 i += 1
             }
         }
@@ -118,6 +118,15 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
         label.font = UIFont.boldSystemFontOfSize(19)
         label.textColor = UIColor.whiteColor()
         label.backgroundColor = Utilities.backgroundColor
+    }
+    
+    private func configImageView(imageView: UIImageView) {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        tap.delegate = self
+        imageView.addGestureRecognizer(tap)
+        imageView.contentMode = .ScaleAspectFill
+        imageView.userInteractionEnabled = true
+        imageView.backgroundColor = Utilities.backgroundColor
     }
 }
 
@@ -382,17 +391,17 @@ extension BDMIMovieViewController {
                         } else {
                             
                             //Create new movie and save to coredata
-                            let newMovie = self.stack.createNewMovie(movieResult!)
+//                            let newMovie = self.stack.createNewMovie(movieResult!)
                             
                             //Check if the movie belongs to any collection
                             if let collectionData = movieResult!.belongsToCollection {
                                 let collectionID = collectionData["id"] as! Int
                                 
                                 //Check if the collection is saved
-                                if let savedCollection = self.stack.objectSavedInCoreData(collectionID, entity: CoreDataEntityNames.Collection) as? Collection {
+                                if let _ = self.stack.objectSavedInCoreData(collectionID, entity: CoreDataEntityNames.Collection) as? Collection {
                                     
                                     //Add the movie to its collection
-                                    savedCollection.addMoviesObject(newMovie)
+//                                    savedCollection.addMoviesObject(newMovie)
                                 } else {
                                     if !collectionIDs.contains(collectionID) {
                                         collectionIDs.append(collectionID)
@@ -403,16 +412,9 @@ extension BDMIMovieViewController {
                                                     print("Error while getting collection. Error: \(error?.localizedDescription)")
                                                     return
                                                 }
-                                                
                                                 //Create new collection and add the movie to it.
-                                                let newCollection = self.stack.createNewCollection(collectionResult!)
-                                                newCollection.addMoviesObject(newMovie)
-                                                
-                                                //Get the collection's movie data, loop back to perfetch.
-                                                if let parts = collectionResult!.parts {
-                                                    let collectionMovies = TMDBMovie.moviesFromResults(parts)
-                                                    self.perfetchMovieDetails(collectionMovies)
-                                                }
+                                                let _ = self.stack.createNewCollection(collectionResult!)
+//                                                newCollection.addMoviesObject(newMovie)
                                             })
                                         })
                                     }
@@ -423,25 +425,5 @@ extension BDMIMovieViewController {
                 })
             }
         }
-        //Save context
-        do {
-            try Utilities.appDelegate.stack.context.save()
-        } catch {
-            let error = error as NSError
-            print("Save failed. Error: \(error.localizedDescription)")
-        }
-    }
-}
-
-
-//MARK: Helper Methods
-extension BDMIMovieViewController {
-    private func changeTextForLabel(label: UILabel, text: String) {
-        label.text = text
-        label.sizeToFit()
-    }
-    
-    private func getRandomNumber(max: Int) -> Int {
-        return Int(arc4random_uniform(UInt32(max)))
     }
 }

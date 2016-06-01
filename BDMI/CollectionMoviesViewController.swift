@@ -19,7 +19,8 @@ class CollectionMoviesViewController: UIViewController {
     @IBOutlet weak var navView: UIView!
     
     var collection : Collection?
-    var collectionMovies : [Movie]?
+    var collectionMovies = [Movie]()
+    var stack = Utilities.appDelegate.stack
     
     var tr_presentTransition: TRViewControllerTransitionDelegate?
     weak var modalDelegate: ModalViewControllerDelegate?
@@ -28,7 +29,12 @@ class CollectionMoviesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let collection = collection {
-            collectionMovies = collection.movies?.allObjects as? [Movie]
+            let movies = collection.movies?.allObjects as? [Movie]
+            if movies!.count == 0 {
+                getMoviesForCollection(collection)
+            } else {
+                collectionMovies = Array(Set(movies!))
+            }
             setupBlurView()
             setupNavView()
         }
@@ -41,16 +47,59 @@ class CollectionMoviesViewController: UIViewController {
 
 }
 
+//MARK: Networking
+
+extension CollectionMoviesViewController {
+    private func getMoviesForCollection(collection: Collection) {
+        TMDBClient.sharedInstance.getCollectionlBy(Int(collection.id!), completionHandlerForGetCollection: { (result, error) in
+            guard (error == nil) else {
+                print("Error while getting collection. Error: \(error?.localizedDescription)")
+                return
+            }
+            if let parts = result!.parts {
+                let collectionMovies = TMDBMovie.moviesFromResults(parts)
+                self.perfetchMovies(collectionMovies, forCollection: collection)
+            }
+        })
+        
+    }
+    
+    private func perfetchMovies(movies: [TMDBMovie],  forCollection collection: Collection) {
+        for movie in movies {
+            //Check if the movie is already saved.
+            if let savedMovie = stack.objectSavedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {
+                
+                self.collectionMovies.append(savedMovie)
+                self.collectionView.reloadData()
+            } else {
+                
+                //Movie's not saved. Get movie details from API
+                TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (movieResult, error) in
+                    performUIUpdatesOnMain({
+                        if let error = error {
+                            print("Prefetch Failed. \(error.domain)")
+                        } else {
+                            //Create new movie and save to coredata
+                            let newMovie = self.stack.createNewMovie(movieResult!)
+                            collection.addMoviesObject(newMovie)
+                            self.collectionMovies.append(newMovie)
+                            self.collectionView.reloadData()
+                        }
+                    })
+                })
+            }
+        }
+    }
+}
+
+//MARK: CollectionDelegate and DataSource
 extension CollectionMoviesViewController : UICollectionViewDataSource, UICollectionViewDelegate, ModalTransitionDelegate {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        if let movies = collectionMovies {
-            return movies.count + 1
-        }
-        return 0
+        return collectionMovies.count + 1
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -64,10 +113,8 @@ extension CollectionMoviesViewController : UICollectionViewDataSource, UICollect
         } else {
             cell.overviewView.hidden = true
             cell.posterImageView.hidden = false
-            if let movies = collectionMovies {
-                let movie = movies[indexPath.section - 1]
-                cell.posterImageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.PosterSizes.DetailPoster, filePath: movie.posterPath!), placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1.5))], progressBlock: nil, completionHandler: nil)
-            }
+            let movie = collectionMovies[indexPath.section - 1]
+            cell.posterImageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.PosterSizes.DetailPoster, filePath: movie.posterPath!), placeholderImage: nil, optionsInfo: [.Transition(ImageTransition.Fade(1.5))], progressBlock: nil, completionHandler: nil)
         }
         return cell
     }
@@ -77,7 +124,7 @@ extension CollectionMoviesViewController : UICollectionViewDataSource, UICollect
             return
         }
         let movieDetailVC = self.storyboard?.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
-        let movie = collectionMovies![indexPath.section - 1]
+        let movie = collectionMovies[indexPath.section - 1]
         movieDetailVC.movieID = Int(movie.id!)
         movieDetailVC.moviePosterPath = movie.posterPath
         movieDetailVC.modalDelegate = self

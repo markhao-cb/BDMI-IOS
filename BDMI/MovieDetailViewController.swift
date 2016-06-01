@@ -34,7 +34,9 @@ class MovieDetailViewController: UIViewController {
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupBackgroundView()
+        
         if let _ = movie {} else {
             if let id = movieID {
                 if case let movie as Movie = stack.objectSavedInCoreData(id, entity: CoreDataEntityNames.Movie) {

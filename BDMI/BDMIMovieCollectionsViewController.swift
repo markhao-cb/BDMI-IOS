@@ -20,18 +20,25 @@ class BDMIMovieCollectionsViewController: UIViewController {
     var collections : [Collection]?
     let cellSpacingHeight : CGFloat = 5
     var tr_presentTransition: TRViewControllerTransitionDelegate?
+    var stack = Utilities.appDelegate.stack
     
     
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        createPlaceHolderLabel("Fetching...Come again later.")
         fetchCollection()
         addRefreshControl()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-//        fetchCollection()
+        fetchCollection()
+        if let collections = collections where collections.count != 0 {
+            tableView.hidden = false
+        } else {
+            tableView.hidden = true
+        }
     }
 }
 
@@ -40,45 +47,75 @@ extension BDMIMovieCollectionsViewController {
     private func getMoviesForCollection(collections: [Collection]) {
         for collection in collections {
             TMDBClient.sharedInstance.getCollectionlBy(Int(collection.id!), completionHandlerForGetCollection: { (result, error) in
-                guard error == nil else {
-                    print("Get movie for collection failed. Error: \(error?.localizedDescription)")
-                    return
-                }
-                
-                
+                performUIUpdatesOnMain({
+                    guard (error == nil) else {
+                        print("Error while getting collection. Error: \(error?.localizedDescription)")
+                        return
+                    }
+                    //Get the collection's movie data, loop back to perfetch.
+                    if let parts = result!.parts {
+                        let collectionMovies = TMDBMovie.moviesFromResults(parts)
+                        self.perfetchMovies(collectionMovies, forCollection: collection)
+                    }
+                })
             })
+        }
+    }
+    
+    private func perfetchMovies(movies: [TMDBMovie],  forCollection collection: Collection) {
+        for movie in movies {
+            //Check if the movie is already saved.
+            if let _ = stack.objectSavedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {} else {
+                
+                //Movie's not saved. Get movie details from API
+                TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (movieResult, error) in
+                    performUIUpdatesOnMain({
+                        if let error = error {
+                            print("Prefetch Failed. \(error.domain)")
+                        } else {
+                            //Create new movie and save to coredata
+                            let newMovie = self.stack.createNewMovie(movieResult!)
+                            collection.addMoviesObject(newMovie)
+                        }
+                    })
+                })
+            }
         }
     }
 }
 
 //MARK: Core Data Methods
 extension BDMIMovieCollectionsViewController {
-    private func fetchCollection() {
+     func fetchCollection() {
         let fetchRequest = NSFetchRequest(entityName: CoreDataEntityNames.Collection)
         let sortDescriptor = [NSSortDescriptor(key: "creationDate", ascending: false)]
         let predicate = NSPredicate(format: "rowBackdrop != nil")
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sortDescriptor
         
-        NVActivityIndicatorView.showHUDAddedTo(view)
         let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result) in
             performUIUpdatesOnMain({
-                NVActivityIndicatorView.hideHUDForView(self.view)
-                let collections = result.finalResult as? [Collection]
-                if collections!.count > 0 {
-                    self.collections = Array(Set(collections!))
-                    self.tableView.reloadData()
+                
+                if let collections = result.finalResult as? [Collection] {
+                    if collections.count > 0 {
+                        let filteredCollection = Array(Set(collections))
+                        self.collections = filteredCollection
+                        self.tableView.hidden = false
+//                        self.getMoviesForCollection(filteredCollection)
+                        self.tableView.reloadData()
+                    }
                 }
+                
             })
         }
         
-        Utilities.appDelegate.stack.context.performBlock { 
+        stack.context.performBlock {
             do {
-                try Utilities.appDelegate.stack.context.executeRequest(asynchronousFetchRequest)
+                try self.stack.context.executeRequest(asynchronousFetchRequest)
             } catch {
                 let error = error as NSError
                 print("Failed to fetch collections. Error: \(error.localizedDescription)")
-                performUIUpdatesOnMain({ 
+                performUIUpdatesOnMain({
                     NVActivityIndicatorView.hideHUDForView(self.view)
                 })
             }
@@ -128,8 +165,6 @@ extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableVie
 extension BDMIMovieCollectionsViewController {
     private func addRefreshControl() {
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = UIColor.whiteColor()
-        refreshControl.backgroundColor = UIColor.clearColor()
         refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl)
     }

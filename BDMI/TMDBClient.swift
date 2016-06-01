@@ -47,6 +47,11 @@ class TMDBClient: NSObject {
                 return
             }
             
+            guard let stat = (response as? NSHTTPURLResponse)?.statusCode where stat != 429 else {
+                sendError("Your request count (#) is over the allowed limit of (40). Try again later.")
+                return
+            }
+            
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
                 sendError("Your request returned a status code other than 2xx!")

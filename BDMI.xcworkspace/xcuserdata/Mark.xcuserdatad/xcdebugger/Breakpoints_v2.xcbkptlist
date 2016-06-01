@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BDMI/TMDBClient.swift"
-            timestampString = "486349093.668898"
+            timestampString = "486504869.292847"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "createUrlForImages(_:filePath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BDMI/TMDBClient.swift"
-            timestampString = "486370593.168015"
+            filePath = "BDMI/CollectionMoviesViewController.swift"
+            timestampString = "486514706.896633"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "taskForGETMethod(_:parameters:completionHandlerForGET:)"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "perfetchMovies(_:forCollection:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BDMI/BDMIMovieViewController.swift"
-            timestampString = "486459042.203344"
+            filePath = "BDMI/CollectionMoviesViewController.swift"
+            timestampString = "486514706.896633"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
-            landmarkName = "imageTapped(_:)"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "perfetchMovies(_:forCollection:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BDMI.CollectionMoviesViewController.(perfetchMovies in _DFEC86DFA0D8902AC105C344DDA0C2D4) (Swift.Array&lt;BDMI.TMDBMovie&gt;, forCollection : BDMI.Collection) -&gt; ()"
+                  moduleName = "BDMI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Mark/Documents/Mark&apos;s%20iOS%20Applications/BDMI/BDMI/CollectionMoviesViewController.swift"
+                  timestampString = "486514096.777925"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "1688">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BDMI.CollectionMoviesViewController.((perfetchMovies in _DFEC86DFA0D8902AC105C344DDA0C2D4) (Swift.Array&lt;BDMI.TMDBMovie&gt;, forCollection : BDMI.Collection) -&gt; ()).(closure #1)"
+                  moduleName = "BDMI"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Mark/Documents/Mark&apos;s%20iOS%20Applications/BDMI/BDMI/CollectionMoviesViewController.swift"
+                  timestampString = "486514096.778134"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "316">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BDMI/CollectionMoviesViewController.swift"
+            timestampString = "486514706.896633"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BDMI/BDMIMovieCollectionsViewController.swift"
-            timestampString = "486456984.480198"
+            filePath = "BDMI/CollectionMoviesViewController.swift"
+            timestampString = "486514706.896633"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "scrollViewDidScroll(_:)"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "collectionView(_:cellForItemAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

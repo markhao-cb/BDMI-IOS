@@ -10,5 +10,6 @@ target 'BDMI' do
     pod 'Kingfisher', '~> 2.4'
     pod 'TransitionTreasury', '~> 3.0.4'
     pod 'TransitionAnimation', '~>3.0.3'
+    pod 'MAThemeKit'
 end
 
