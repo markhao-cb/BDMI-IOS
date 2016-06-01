@@ -19,7 +19,7 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var headerView: MovieDetailHeaderSectionView!
     
-    
+    let stack = Utilities.appDelegate.stack
     var movieID : Int?
     var moviePosterPath: String?
     var movie : Movie?
@@ -37,7 +37,7 @@ class MovieDetailViewController: UIViewController {
         setupBackgroundView()
         if let _ = movie {} else {
             if let id = movieID {
-                if case let movie as Movie = Utilities.objectSavedInCoreData(id, entity: CoreDataEntityNames.Movie) {
+                if case let movie as Movie = stack.objectSavedInCoreData(id, entity: CoreDataEntityNames.Movie) {
                     self.movie = movie
                 } else {
                     getMovieDetailsById(id)
@@ -101,7 +101,7 @@ extension MovieDetailViewController {
                     showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
-                self.movie = Utilities.createNewMovie(result!)
+                self.movie = self.stack.createNewMovie(result!)
                 self.tableView.reloadData()
             })
         }
@@ -153,7 +153,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
             return 130
         case 1:
             if let overview = movie?.overview {
-                return overview.heightWithConstrainedWidth(Utilities.screenSize.width - 36, font: UIFont.systemFontOfSize(15))
+                return overview.heightWithConstrainedWidth(Utilities.screenSize.width - 40, font: UIFont.systemFontOfSize(16))
             } else {
                 return 0
             }
@@ -191,7 +191,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
             } else if offsetY <= 40 && self.headerView.isHiding {
                 self.showHeaderView()
                 for cell in cells {
-                    cell.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+                    cell.backgroundColor = Utilities.backgroundColor
                 }
             }
         }

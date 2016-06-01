@@ -18,6 +18,7 @@ class BDMIMovieViewController: UIViewController {
     
     //MARK: Propertites
     @IBOutlet weak var tableView: UITableView!
+    let stack = Utilities.appDelegate.stack
     var scrollView: UIScrollView?
     var nowShowingMovies : [TMDBMovie]?
     var upcomingMovies : [TMDBMovie]?
@@ -36,10 +37,12 @@ class BDMIMovieViewController: UIViewController {
         scrollView = UIScrollView(frame: CGRectMake(0,0,Utilities.screenSize.width,200))
         scrollView?.pagingEnabled = true
         tableView.tableHeaderView = scrollView!
-        
-        
-        loadData()
         addRefreshControl()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
     }
 }
 
@@ -80,7 +83,7 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
                 imageView.addSubview(label)
                 scrollView!.addSubview(imageView)
                 imageView.kf_setImageWithURL(TMDBClient.sharedInstance.createUrlForImages(TMDBClient.BackdropSizes.DetailBackdrop, filePath: backdropPath), placeholderImage: nil, optionsInfo: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
-                    self.tableView.reloadData()
+//                    self.tableView.reloadData()
                 })
                 let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
                 tap.delegate = self
@@ -311,7 +314,9 @@ extension BDMIMovieViewController {
                     return
                 }
                 self.nowShowingMovies = result!
-                self.perfetchMovieDetails(result!)
+                delay(15, closure: { 
+                    self.perfetchMovieDetails(result!)
+                })
                 self.tableView.reloadData()
                 print("Load Now Showing Movies Successfully")
             })
@@ -327,7 +332,7 @@ extension BDMIMovieViewController {
                 }
                 self.upcomingMovies = result
                 self.tableView.reloadData()
-                delay(15, closure: {
+                delay(30, closure: {
                     self.perfetchMovieDetails(result!)
                 })
                 print("Load Upcoming Movies Successfully")
@@ -344,7 +349,7 @@ extension BDMIMovieViewController {
                 }
                 self.popularMovies = result
                 if !self.scrollViewsetted {self.setupScrollView()}
-                delay(30, closure: {
+                delay(45, closure: {
                     self.perfetchMovieDetails(result!)
                 })
                 self.tableView.reloadData()
@@ -361,7 +366,7 @@ extension BDMIMovieViewController {
                     return
                 }
                 self.topRatedMovies = result
-                delay(45, closure: {
+                delay(60, closure: {
                     self.perfetchMovieDetails(result!)
                 })
                 self.tableView.reloadData()
@@ -371,15 +376,58 @@ extension BDMIMovieViewController {
     }
     
     private func perfetchMovieDetails(movies: [TMDBMovie]) {
+        var collectionIDs = [Int]()
         for movie in movies {
-            if let _ = Utilities.objectSavedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {} else {
-                TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (result, error) in
-                    if let error = error {
-                        print("Prefetch Failed. \(error.domain)")
-                    } else {
-                        Utilities.createNewMovie(result!)
-                        
-                    }
+            
+            //Check if the movie is already saved.
+            if let _ = stack.objectSavedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {} else {
+                
+                //Movie's not saved. Get movie details from API
+                TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (movieResult, error) in
+                    performUIUpdatesOnMain({ 
+                        if let error = error {
+                            print("Prefetch Failed. \(error.domain)")
+                        } else {
+                            
+                            //Create new movie and save to coredata
+                            let newMovie = self.stack.createNewMovie(movieResult!)
+                            
+                            //Check if the movie belongs to any collection
+                            if let collectionData = movieResult!.belongsToCollection {
+                                let collectionID = collectionData["id"] as! Int
+                                
+                                //Check if the collection is saved
+                                if let savedCollection = self.stack.objectSavedInCoreData(collectionID, entity: CoreDataEntityNames.Collection) as? Collection {
+                                    
+                                    //Add the movie to its collection
+                                    savedCollection.addMoviesObject(newMovie)
+                                } else {
+                                    if !collectionIDs.contains(collectionID) {
+                                        collectionIDs.append(collectionID)
+                                        //Collection not saved. Get collection data from API
+                                        TMDBClient.sharedInstance.getCollectionlBy(collectionID, completionHandlerForGetCollection: { (collectionResult, error) in
+                                            performUIUpdatesOnMain({
+                                                guard (error == nil) else {
+                                                    print("Error while getting collection. Error: \(error?.localizedDescription)")
+                                                    return
+                                                }
+                                                
+                                                //Create new collection and add the movie to it.
+                                                let newCollection = self.stack.createNewCollection(collectionResult!)
+                                                newCollection.addMoviesObject(newMovie)
+                                                
+                                                //Get the collection's movie data, loop back to perfetch.
+                                                if let parts = collectionResult!.parts {
+                                                    let collectionMovies = TMDBMovie.moviesFromResults(parts)
+                                                    self.perfetchMovieDetails(collectionMovies)
+                                                }
+                                            })
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                    })
                 })
             }
         }

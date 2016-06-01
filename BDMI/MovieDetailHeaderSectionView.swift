@@ -15,6 +15,6 @@ class MovieDetailHeaderSectionView: UIView {
     var isHiding : Bool = false
     
     func configView() {
-        self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        self.backgroundColor = Utilities.backgroundColor
     }
 }

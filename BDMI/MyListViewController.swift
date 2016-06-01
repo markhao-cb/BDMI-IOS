@@ -21,8 +21,8 @@ class MyListViewController: UIViewController {
     var tr_presentTransition: TRViewControllerTransitionDelegate?
     
     //Life Circle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         getFavoriteMovies()
         getWatchedMovies()
     }

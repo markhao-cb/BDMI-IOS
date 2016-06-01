@@ -13,6 +13,6 @@ class MovieDetailCellForOverview: UITableViewCell {
     @IBOutlet weak var overviewLbl: UILabel!
     
     func configCell() {
-        self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        self.backgroundColor = Utilities.backgroundColor
     }
 }

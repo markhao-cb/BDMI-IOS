@@ -27,6 +27,6 @@ class BDMIMovieCollectionsTableViewCell: UITableViewCell {
     
     func configCell() {
         backdropIV.clipsToBounds = true
-        titleLabel.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        titleLabel.backgroundColor = Utilities.backgroundColor
     }
 }

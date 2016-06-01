@@ -49,12 +49,14 @@ extension TMDBClient {
         static let Popular = "/movie/popular"
         static let Latest = "/movie/latest"
         static let MovieDetail = "/movie/{id}"
+        static let Collection = "/collection/{id}"
     }
     
     // MARK: URL Keys
     struct URLKeys {
         static let UserID = "id"
         static let MovieID = "id"
+        static let CollectionID = "id"
 
     }
     
@@ -111,11 +113,13 @@ extension TMDBClient {
         static let MovieBackdropPath = "backdrop_path"
         
         // MARK: Collections
-        static let CollectionBackdrop = "backdrop_path"
+        static let CollectionBackdropPath = "backdrop_path"
         static let CollectionID = "id"
         static let CollectionName = "name"
         static let CollectionParts = "parts"
         static let CollectionPoster = "poster_path"
+        static let CollectionOverview = "overview"
+        static let CollectionPosterPath = "poster_path"
     }
     
     // MARK: Poster Sizes

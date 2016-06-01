@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
     <entity name="Collection" representedClassName=".Collection" syncable="YES">
-        <attribute name="backdrop" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="creationDate" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="detailBackDropPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="detailPosterPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rowBackdrop" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
         <relationship name="movies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Movie" inverseName="collections" inverseEntity="Movie" syncable="YES"/>
     </entity>
     <entity name="Movie" representedClassName=".Movie" syncable="YES">
+        <attribute name="backdropPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="popularity" optional="YES" attributeType="Float" defaultValueString="0.0" indexed="YES" syncable="YES"/>
         <attribute name="poster" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="posterPath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="releaseDate" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="runtime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
@@ -20,7 +25,7 @@
         <relationship name="collections" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Collection" inverseName="movies" inverseEntity="Collection" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Collection" positionX="-54" positionY="-9" width="128" height="120"/>
-        <element name="Movie" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="Collection" positionX="-54" positionY="-9" width="128" height="165"/>
+        <element name="Movie" positionX="-63" positionY="-18" width="128" height="225"/>
     </elements>
 </model>

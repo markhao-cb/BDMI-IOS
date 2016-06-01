@@ -2,7 +2,7 @@
 //  Movie+CoreDataProperties.swift
 //  
 //
-//  Created by Yu Qi Hao on 5/29/16.
+//  Created by Yu Qi Hao on 5/31/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -14,15 +14,17 @@ import CoreData
 
 extension Movie {
 
-    @NSManaged var title: String?
     @NSManaged var id: NSNumber?
-    @NSManaged var poster: NSData?
     @NSManaged var overview: String?
+    @NSManaged var popularity: NSNumber?
+    @NSManaged var poster: NSData?
     @NSManaged var releaseDate: String?
+    @NSManaged var runtime: NSNumber?
+    @NSManaged var title: String?
     @NSManaged var voteAverage: NSNumber?
     @NSManaged var voteCount: NSNumber?
-    @NSManaged var popularity: NSNumber?
-    @NSManaged var runtime: NSNumber?
+    @NSManaged var posterPath: String?
+    @NSManaged var backdropPath: String?
     @NSManaged var collections: NSSet?
     
     @NSManaged func addCollectionsObject(collection: Collection)

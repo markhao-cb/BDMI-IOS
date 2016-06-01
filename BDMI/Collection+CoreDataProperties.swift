@@ -14,11 +14,14 @@ import CoreData
 
 extension Collection {
 
-    @NSManaged var backdrop: NSData?
-    @NSManaged var name: String?
-    @NSManaged var id: NSNumber?
-    @NSManaged var movies: NSSet?
+    @NSManaged var rowBackdrop: NSData?
     @NSManaged var creationDate: NSDate?
+    @NSManaged var id: NSNumber?
+    @NSManaged var name: String?
+    @NSManaged var overview: String?
+    @NSManaged var detailBackDropPath: String?
+    @NSManaged var detailPosterPath: String?
+    @NSManaged var movies: NSSet?
     
     @NSManaged func addMoviesObject(movie: Movie)
     @NSManaged func removeMoviesObject(movie: Movie)

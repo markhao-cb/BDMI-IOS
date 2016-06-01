@@ -11,20 +11,20 @@ struct TMDBCollection {
     var backdropPath : String?
     var id : Int!
     var name : String!
-    var parts : [TMDBMovie]?
     var posterPath : String?
+    var overview: String?
+    var parts : [[String: AnyObject]]?
     // MARK: Initializers
     
     // construct a TMDBMovie from a dictionary
     init(dictionary: [String:AnyObject]) {
-        backdropPath = dictionary[TMDBClient.JSONResponseKeys.CollectionBackdrop] as? String
+        backdropPath = dictionary[TMDBClient.JSONResponseKeys.CollectionBackdropPath] as? String
         id = dictionary[TMDBClient.JSONResponseKeys.CollectionID] as! Int
         posterPath = dictionary[TMDBClient.JSONResponseKeys.CollectionPoster] as? String
         name = dictionary[TMDBClient.JSONResponseKeys.CollectionName] as? String
-        if let movies = dictionary[TMDBClient.JSONResponseKeys.CollectionParts] {
-            parts = TMDBMovie.moviesFromResults(movies as! [[String: AnyObject]])
-        }
-        
+        overview = dictionary[TMDBClient.JSONResponseKeys.CollectionOverview] as? String
+        posterPath = dictionary[TMDBClient.JSONResponseKeys.CollectionPosterPath] as? String
+        parts = dictionary[TMDBClient.JSONResponseKeys.CollectionParts] as? [[String: AnyObject]]
     }
     
     static func collectionsFromResults(results: [[String:AnyObject]]) -> [TMDBCollection] {

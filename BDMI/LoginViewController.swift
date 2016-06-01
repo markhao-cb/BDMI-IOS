@@ -41,7 +41,6 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    
     // MARK: Login
     
     private func completeLogin() {

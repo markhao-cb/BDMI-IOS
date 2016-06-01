@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 import NVActivityIndicatorView
+import TransitionTreasury
+import TransitionAnimation
 
 class BDMIMovieCollectionsViewController: UIViewController {
 
@@ -17,19 +19,34 @@ class BDMIMovieCollectionsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var collections : [Collection]?
     let cellSpacingHeight : CGFloat = 5
+    var tr_presentTransition: TRViewControllerTransitionDelegate?
     
     
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
+        addRefreshControl()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         fetchCollection()
     }
 }
 
 //MARK: Networking Methods
 extension BDMIMovieCollectionsViewController {
-    private func getMoviesFromCollection(collection: [Collection]) {
-        
+    private func getMoviesForCollection(collections: [Collection]) {
+        for collection in collections {
+            TMDBClient.sharedInstance.getCollectionlBy(Int(collection.id!), completionHandlerForGetCollection: { (result, error) in
+                guard error == nil else {
+                    print("Get movie for collection failed. Error: \(error?.localizedDescription)")
+                    return
+                }
+                
+                
+            })
+        }
     }
 }
 
@@ -38,7 +55,7 @@ extension BDMIMovieCollectionsViewController {
     private func fetchCollection() {
         let fetchRequest = NSFetchRequest(entityName: CoreDataEntityNames.Collection)
         let sortDescriptor = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        let predicate = NSPredicate(format: "backdrop != nil")
+        let predicate = NSPredicate(format: "rowBackdrop != nil")
         fetchRequest.predicate = predicate
         fetchRequest.sortDescriptors = sortDescriptor
         
@@ -46,7 +63,8 @@ extension BDMIMovieCollectionsViewController {
         let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result) in
             performUIUpdatesOnMain({
                 NVActivityIndicatorView.hideHUDForView(self.view)
-                self.collections = result.finalResult as? [Collection]
+                let collections = result.finalResult as? [Collection]
+                self.collections = Array(Set(collections!))
                 self.tableView.reloadData()
             })
            
@@ -68,7 +86,7 @@ extension BDMIMovieCollectionsViewController {
 
 
 //MARK: UITableView Delegate && DataSource
-extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableViewDelegate {
+extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableViewDelegate, ModalTransitionDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let collections = collections {
             return collections.count
@@ -82,10 +100,18 @@ extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableVie
         cell.configCell()
         if let collections = collections {
             let collection = collections[indexPath.row]
-            cell.backdropIV.image = UIImage(data: collection.backdrop!)
+            cell.backdropIV.image = UIImage(data: collection.rowBackdrop!)
             cell.titleLabel.text = collection.name
         }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let collection = collections![indexPath.row]
+        let colletionMoviesVC = self.storyboard?.instantiateViewControllerWithIdentifier("CollectionMoviesViewController") as! CollectionMoviesViewController
+        colletionMoviesVC.collection = collection
+        colletionMoviesVC.modalDelegate = self
+        tr_presentViewController(colletionMoviesVC, method: TRPresentTransitionMethod.Fade)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -101,6 +127,8 @@ extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableVie
 extension BDMIMovieCollectionsViewController {
     private func addRefreshControl() {
         let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = UIColor.whiteColor()
+        refreshControl.backgroundColor = UIColor.clearColor()
         refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: .ValueChanged)
         tableView.addSubview(refreshControl)
     }

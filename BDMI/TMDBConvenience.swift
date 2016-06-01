@@ -20,6 +20,7 @@ extension TMDBClient {
             if success {
                 
                 self.requestToken = requestToken
+                Utilities.userDefault.setValue(requestToken!, forKey: "RequestToken")
                 
                 self.loginWithToken(requestToken, hostViewController: hostViewController) { (success, errorString) in
                     
@@ -29,6 +30,7 @@ extension TMDBClient {
                             if success {
                                 
                                 self.sessionID = sessionID
+                                Utilities.userDefault.setValue(sessionID!, forKey: "SessionID")
                                 
                                 self.getUserID() { (success, userID, errorString) in
                                     
@@ -37,6 +39,7 @@ extension TMDBClient {
                                         if let userID = userID {
                                             
                                             self.userID = userID
+                                            Utilities.userDefault.setValue(userID, forKey: "UserID")
                                         }
                                     }
                                     
@@ -197,6 +200,29 @@ extension TMDBClient {
                     completionHandlerForGetDetail(result: movie, error: nil)
                 } else {
                     completionHandlerForGetDetail(result: nil, error: NSError(domain: "getMovieDetail parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMovieDetail"]))
+                }
+            }
+        }
+    }
+    
+    func getCollectionlBy(id: Int, completionHandlerForGetCollection: (result: TMDBCollection?, error: NSError?) -> Void) {
+        
+        let parameters = [String: AnyObject]()
+        var mutableMethod: String = Methods.Collection
+        mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.CollectionID, value: String(id))!
+        
+        taskForGETMethod(mutableMethod, parameters: parameters) { (results, error) in
+            
+            if let error = error {
+                completionHandlerForGetCollection(result: nil, error: error)
+            } else {
+                
+                if let results = results as? [String:AnyObject] {
+                    
+                    let collection = TMDBCollection(dictionary: results)
+                    completionHandlerForGetCollection(result: collection, error: nil)
+                } else {
+                    completionHandlerForGetCollection(result: nil, error: NSError(domain: "getCollection parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getCollection"]))
                 }
             }
         }
