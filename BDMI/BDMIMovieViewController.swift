@@ -68,8 +68,8 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
                 imageView.tag = movie.id
                 imageView.restorationIdentifier = movie.posterPath
                 let label = UILabel(frame: CGRectMake(20, height - 50, width - 40, 40))
+                label.text = movie.title
                 configLabel(label)
-                changeTextForLabel(label, text: movie.title)
                 imageView.addSubview(label)
                 scrollView!.addSubview(imageView)
                 NVActivityIndicatorView.showHUDAddedTo(imageView)
@@ -113,9 +113,9 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
     
     private func configLabel(label: UILabel) {
         label.textAlignment = .Right
-        label.font = UIFont.boldSystemFontOfSize(19)
         label.textColor = UIColor.whiteColor()
         label.backgroundColor = Utilities.backgroundColor
+        label.sizeToFit()
     }
     
     private func configImageView(imageView: UIImageView) {

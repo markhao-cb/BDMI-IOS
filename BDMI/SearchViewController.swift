@@ -21,11 +21,22 @@ class SearchViewController: BDMIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createPlaceHolderLabel("No Results")
+        placeHolderLabel = createPlaceHolderLabel("No Results")
         if movieSearchBar.text == "" {
             movieTableView.hidden = true
         }
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if !Reachability.isConnectedToNetwork() {
+            changeTextForLabel(placeHolderLabel!, text: "Interest Disconnected")
+        } else {
+            changeTextForLabel(placeHolderLabel!, text: "No Results")
+        }
+    }
+    
+    
     
     //MARK: IBActions
     @IBAction func handleTap(sender: AnyObject) {
@@ -60,16 +71,24 @@ extension SearchViewController: UISearchBarDelegate {
         }
         
         // new search
-        searchTask = TMDBClient.sharedInstance.getMoviesForSearchString(searchText) { (movies, error) in
-            self.searchTask = nil
-            if let movies = movies {
-                self.movies = movies
-                performUIUpdatesOnMain {
-                    self.movieTableView!.reloadData()
-                    self.movieTableView.hidden = false
-                }
+        
+        if Reachability.isConnectedToNetwork() {
+            searchTask = TMDBClient.sharedInstance.getMoviesForSearchString(searchText) { (movies, error) in
+                performUIUpdatesOnMain({ 
+                    self.searchTask = nil
+                    if let movies = movies {
+                        self.movies = movies
+                        self.movieTableView!.reloadData()
+                        self.movieTableView.hidden = false
+                    } else {
+                       self.changeTextForLabel(self.placeHolderLabel!, text: "No Results")
+                    }
+                })
             }
+        } else {
+            changeTextForLabel(placeHolderLabel!, text: "Interest Disconnected")
         }
+        
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {

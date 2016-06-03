@@ -43,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         stack.autoSave(60)
         setTheme()
         
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
         if case let userID as Int = Utilities.userDefault.valueForKey("UserID"), case let sessionID as String =  Utilities.userDefault.valueForKey("SessionID"), case let requestToken as String = Utilities.userDefault.valueForKey("RequestToken"){
             TMDBClient.sharedInstance.userID = userID
             TMDBClient.sharedInstance.sessionID = sessionID
