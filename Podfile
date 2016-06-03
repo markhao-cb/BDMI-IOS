@@ -11,5 +11,6 @@ target 'BDMI' do
     pod 'TransitionTreasury', '~> 3.0.4'
     pod 'TransitionAnimation', '~>3.0.3'
     pod 'MAThemeKit'
+    pod 'FlatUIKit'
 end
 

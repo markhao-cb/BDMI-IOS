@@ -1,23 +1,31 @@
 PODS:
+  - FlatUIKit (1.6.2)
   - JCAlertView (1.1.5)
   - Kingfisher (2.4.1)
+  - MAThemeKit (1.0)
   - NVActivityIndicatorView (2.7)
   - TransitionAnimation (3.0.4):
     - TransitionTreasury (~> 3.0)
   - TransitionTreasury (3.0.4)
 
 DEPENDENCIES:
+  - FlatUIKit
   - JCAlertView
   - Kingfisher (~> 2.4)
+  - MAThemeKit
   - NVActivityIndicatorView
   - TransitionAnimation (~> 3.0.3)
   - TransitionTreasury (~> 3.0.4)
 
 SPEC CHECKSUMS:
+  FlatUIKit: 1b41f0d4952ce8d970d8479ce79df54a960242c4
   JCAlertView: c65a7b298b8b497b3db783d82f719b88f4914869
   Kingfisher: 41aed5b6c1ed8fa98cf6d75283ce89cf7890f517
+  MAThemeKit: 559acc98ceadc051cccb1b6bb0c4ca28475eb021
   NVActivityIndicatorView: dc80f18fb27ac92f0aa87246cc13dc39ed3e9ee0
   TransitionAnimation: d761c1a338f5333f4b02a184935e61a8dc14d0e4
   TransitionTreasury: 7228b7758ba4b742e152a198dbe6ca1e46b43949
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 305c3c7bfd43e7bcbb07135ae4da2cbee2b20e51
+
+COCOAPODS: 1.0.0

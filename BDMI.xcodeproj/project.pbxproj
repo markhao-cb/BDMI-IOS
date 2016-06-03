@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25EBC62CB7CDABEBC6F0D336 /* Pods_BDMI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2FAB298E6887C8197C49406 /* Pods_BDMI.framework */; };
+		23E5887A90FDF53C5FE966CC /* Pods_BDMI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9868DC8E17FB9F951C13944 /* Pods_BDMI.framework */; };
 		4D602ECF1CFDC1970028003C /* MovieCeollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D602ECE1CFDC1970028003C /* MovieCeollectionCell.swift */; };
 		4D602ED11CFE25000028003C /* Movie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D602ED01CFE25000028003C /* Movie+CoreDataProperties.swift */; };
 		4D602ED31CFE2A310028003C /* CoreDataConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D602ED21CFE2A310028003C /* CoreDataConvenience.swift */; };
@@ -33,6 +33,7 @@
 		4D6C52071CFC1C19005101C6 /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C51FF1CFC1C19005101C6 /* Collection.swift */; };
 		4D6C52091CFC1E8A005101C6 /* CoreDataConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C52081CFC1E8A005101C6 /* CoreDataConstants.swift */; };
 		4D6C52131CFCF37C005101C6 /* MovieDetailHeaderSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C52121CFCF37C005101C6 /* MovieDetailHeaderSectionView.swift */; };
+		4D8A381A1D016AE600BACF57 /* BDMIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A38191D016AE600BACF57 /* BDMIViewController.swift */; };
 		4D8C1E761CFF520800A1C4CC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C1E751CFF520800A1C4CC /* SearchViewController.swift */; };
 		4D8C1E781CFF670200A1C4CC /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8C1E771CFF670200A1C4CC /* SearchTableViewCell.swift */; };
 		4DC069C11CFD60110029DE4C /* MovieDetailCellForTitleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC069C01CFD60110029DE4C /* MovieDetailCellForTitleSection.swift */; };
@@ -49,7 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		025661DDF217F77A691F777F /* Pods-BDMI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BDMI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BDMI/Pods-BDMI.debug.xcconfig"; sourceTree = "<group>"; };
+		011C80039F13DB6A2C2EABF9 /* Pods-BDMI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BDMI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BDMI/Pods-BDMI.debug.xcconfig"; sourceTree = "<group>"; };
 		4D602ECE1CFDC1970028003C /* MovieCeollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCeollectionCell.swift; sourceTree = "<group>"; };
 		4D602ED01CFE25000028003C /* Movie+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Movie+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4D602ED21CFE2A310028003C /* CoreDataConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConvenience.swift; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		4D6C52081CFC1E8A005101C6 /* CoreDataConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataConstants.swift; sourceTree = "<group>"; };
 		4D6C520A1CFCC698005101C6 /* BDMI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BDMI-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D6C52121CFCF37C005101C6 /* MovieDetailHeaderSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailHeaderSectionView.swift; sourceTree = "<group>"; };
+		4D8A38191D016AE600BACF57 /* BDMIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BDMIViewController.swift; sourceTree = "<group>"; };
 		4D8C1E751CFF520800A1C4CC /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		4D8C1E771CFF670200A1C4CC /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		4DC069C01CFD60110029DE4C /* MovieDetailCellForTitleSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailCellForTitleSection.swift; sourceTree = "<group>"; };
@@ -92,8 +94,8 @@
 		4DFEE1891CFAAC4B0032D90F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DFEE18C1CFAAC4B0032D90F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DFEE18E1CFAAC4B0032D90F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9451C2D2C9B47F3D9EE642E7 /* Pods-BDMI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BDMI.release.xcconfig"; path = "Pods/Target Support Files/Pods-BDMI/Pods-BDMI.release.xcconfig"; sourceTree = "<group>"; };
-		F2FAB298E6887C8197C49406 /* Pods_BDMI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BDMI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9868DC8E17FB9F951C13944 /* Pods_BDMI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BDMI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD5E189B75A8AE2539A2C39C /* Pods-BDMI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BDMI.release.xcconfig"; path = "Pods/Target Support Files/Pods-BDMI/Pods-BDMI.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,22 +103,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25EBC62CB7CDABEBC6F0D336 /* Pods_BDMI.framework in Frameworks */,
+				23E5887A90FDF53C5FE966CC /* Pods_BDMI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		069C46D205609803C0F892A1 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				025661DDF217F77A691F777F /* Pods-BDMI.debug.xcconfig */,
-				9451C2D2C9B47F3D9EE642E7 /* Pods-BDMI.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		4D6C51CE1CFB66F5005101C6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +162,7 @@
 				4DC069C61CFD96B80029DE4C /* MyListViewController.swift */,
 				4DC069CB1CFDBDBD0029DE4C /* CollectionMoviesViewController.swift */,
 				4D8C1E751CFF520800A1C4CC /* SearchViewController.swift */,
+				4D8A38191D016AE600BACF57 /* BDMIViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -192,8 +186,8 @@
 			children = (
 				4DFEE1811CFAAC4B0032D90F /* BDMI */,
 				4DFEE1801CFAAC4B0032D90F /* Products */,
-				069C46D205609803C0F892A1 /* Pods */,
-				645163521804D82E036DD1E4 /* Frameworks */,
+				7416CF39ED32C0D998530C66 /* Pods */,
+				D090CE3C9FA32E6BD995C70C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -223,10 +217,19 @@
 			path = BDMI;
 			sourceTree = "<group>";
 		};
-		645163521804D82E036DD1E4 /* Frameworks */ = {
+		7416CF39ED32C0D998530C66 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				F2FAB298E6887C8197C49406 /* Pods_BDMI.framework */,
+				011C80039F13DB6A2C2EABF9 /* Pods-BDMI.debug.xcconfig */,
+				BD5E189B75A8AE2539A2C39C /* Pods-BDMI.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D090CE3C9FA32E6BD995C70C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9868DC8E17FB9F951C13944 /* Pods_BDMI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -238,12 +241,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4DFEE1911CFAAC4B0032D90F /* Build configuration list for PBXNativeTarget "BDMI" */;
 			buildPhases = (
-				ED0847B454A2498D592AA1DD /* Check Pods Manifest.lock */,
+				5063FFE3EAD3B06FE9D6726E /* 📦 Check Pods Manifest.lock */,
 				4DFEE17B1CFAAC4B0032D90F /* Sources */,
 				4DFEE17C1CFAAC4B0032D90F /* Frameworks */,
 				4DFEE17D1CFAAC4B0032D90F /* Resources */,
-				416A6E3495C33822804AAD4D /* Embed Pods Frameworks */,
-				DF87932584CD11DEC56B6748 /* Copy Pods Resources */,
+				F099DD3A9974DFB3AB14599E /* 📦 Embed Pods Frameworks */,
+				CE0E6FFD2BF65E8846FF2C05 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -301,29 +304,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		416A6E3495C33822804AAD4D /* Embed Pods Frameworks */ = {
+		5063FFE3EAD3B06FE9D6726E /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BDMI/Pods-BDMI-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		DF87932584CD11DEC56B6748 /* Copy Pods Resources */ = {
+		CE0E6FFD2BF65E8846FF2C05 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,19 +334,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BDMI/Pods-BDMI-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ED0847B454A2498D592AA1DD /* Check Pods Manifest.lock */ = {
+		F099DD3A9974DFB3AB14599E /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BDMI/Pods-BDMI-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -354,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D6C51EF1CFC01BF005101C6 /* TMDBCollection.swift in Sources */,
+				4D8A381A1D016AE600BACF57 /* BDMIViewController.swift in Sources */,
 				4D6C51ED1CFBFB46005101C6 /* BDMIMovieCollectionsTableViewCell.swift in Sources */,
 				4DC069C71CFD96B80029DE4C /* MyListViewController.swift in Sources */,
 				4D6C51DF1CFB6BAB005101C6 /* BorderedButton.swift in Sources */,
@@ -498,7 +502,7 @@
 		};
 		4DFEE1921CFAAC4B0032D90F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 025661DDF217F77A691F777F /* Pods-BDMI.debug.xcconfig */;
+			baseConfigurationReference = 011C80039F13DB6A2C2EABF9 /* Pods-BDMI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -514,7 +518,7 @@
 		};
 		4DFEE1931CFAAC4B0032D90F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9451C2D2C9B47F3D9EE642E7 /* Pods-BDMI.release.xcconfig */;
+			baseConfigurationReference = BD5E189B75A8AE2539A2C39C /* Pods-BDMI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

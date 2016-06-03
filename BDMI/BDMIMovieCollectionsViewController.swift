@@ -12,14 +12,13 @@ import NVActivityIndicatorView
 import TransitionTreasury
 import TransitionAnimation
 
-class BDMIMovieCollectionsViewController: UIViewController {
+class BDMIMovieCollectionsViewController: BDMIViewController {
 
     
     //MARK: Properties
     @IBOutlet weak var tableView: UITableView!
     var collections : [Collection]?
     let cellSpacingHeight : CGFloat = 5
-    var tr_presentTransition: TRViewControllerTransitionDelegate?
     var stack = Utilities.appDelegate.stack
     
     
@@ -95,17 +94,14 @@ extension BDMIMovieCollectionsViewController {
         
         let asynchronousFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result) in
             performUIUpdatesOnMain({
-                
                 if let collections = result.finalResult as? [Collection] {
                     if collections.count > 0 {
                         let filteredCollection = Array(Set(collections))
                         self.collections = filteredCollection
                         self.tableView.hidden = false
-//                        self.getMoviesForCollection(filteredCollection)
                         self.tableView.reloadData()
                     }
                 }
-                
             })
         }
         
@@ -125,7 +121,7 @@ extension BDMIMovieCollectionsViewController {
 
 
 //MARK: UITableView Delegate && DataSource
-extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableViewDelegate, ModalTransitionDelegate {
+extension BDMIMovieCollectionsViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let collections = collections {
             return collections.count

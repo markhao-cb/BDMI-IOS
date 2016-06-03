@@ -42,7 +42,9 @@ class TMDBAuthViewController: UIViewController {
     // MARK: Cancel Auth Flow
     
     func cancelAuth() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: {
+            self.completionHandlerForView!(success: false, errorString: "Sign in Canceled.")
+        })
     }
 }
 

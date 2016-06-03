@@ -10,7 +10,7 @@ import UIKit
 import TransitionTreasury
 import TransitionAnimation
 
-class SearchViewController: UIViewController {
+class SearchViewController: BDMIViewController {
     
     //MARK: Properties
     @IBOutlet weak var movieSearchBar: UISearchBar!
@@ -18,7 +18,6 @@ class SearchViewController: UIViewController {
     
     var movies = [TMDBMovie]()
     var searchTask: NSURLSessionDataTask?
-    var tr_presentTransition: TRViewControllerTransitionDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +80,7 @@ extension SearchViewController: UISearchBarDelegate {
 
 // MARK: UITableViewDelegate, UITableViewDataSource
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource, ModalTransitionDelegate {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         

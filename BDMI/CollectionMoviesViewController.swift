@@ -11,7 +11,7 @@ import Kingfisher
 import TransitionTreasury
 import TransitionAnimation
 
-class CollectionMoviesViewController: UIViewController {
+class CollectionMoviesViewController: BDMIViewController {
     
     //MARK: Properties
     @IBOutlet weak var collectionView: UICollectionView!
@@ -21,9 +21,6 @@ class CollectionMoviesViewController: UIViewController {
     var collection : Collection?
     var collectionMovies = [Movie]()
     var stack = Utilities.appDelegate.stack
-    
-    var tr_presentTransition: TRViewControllerTransitionDelegate?
-    weak var modalDelegate: ModalViewControllerDelegate?
     
     //MARK: Life Circle
     override func viewDidLoad() {
@@ -93,7 +90,7 @@ extension CollectionMoviesViewController {
 }
 
 //MARK: CollectionDelegate and DataSource
-extension CollectionMoviesViewController : UICollectionViewDataSource, UICollectionViewDelegate, ModalTransitionDelegate {
+extension CollectionMoviesViewController : UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 1
     }

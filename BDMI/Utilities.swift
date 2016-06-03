@@ -35,6 +35,9 @@ struct Utilities {
         completionHandlerForConvertData(result: parsedResult, error: nil)
     }
     
+    static func isLoggedIn() -> Bool {
+        return (TMDBClient.sharedInstance.userID != nil && TMDBClient.sharedInstance.sessionID != nil)
+    }
     
     //MARK: AlertViewType
     enum AlertViewType {
@@ -52,9 +55,10 @@ extension UIViewController {
     func changeTextForLabel(label: UILabel, text: String) {
         label.text = text
         label.sizeToFit()
+        label.center = self.view.center
     }
     
-    func createPlaceHolderLabel(text: String) {
+    func createPlaceHolderLabel(text: String) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = UIColor.grayColor()
@@ -64,6 +68,7 @@ extension UIViewController {
         label.center = self.view.center
         self.view.addSubview(label)
         self.view.sendSubviewToBack(label)
+        return label
     }
     
     func getRandomNumber(max: Int) -> Int {
@@ -99,8 +104,6 @@ func showAlertViewWith(title: String, error: String, type: Utilities.AlertViewTy
         break
     }
 }
-
-
 
 //MARK: ActivityIndeicator View
 extension NVActivityIndicatorView {

@@ -12,7 +12,7 @@ import TransitionTreasury
 import TransitionAnimation
 import CoreData
 
-class MovieDetailViewController: UIViewController {
+class MovieDetailViewController: BDMIViewController {
     
     //MARK: Properties
     @IBOutlet weak var tableView: UITableView!
@@ -28,13 +28,10 @@ class MovieDetailViewController: UIViewController {
     var isFavorite = false
     var isWatchlist = false
     
-    weak var modalDelegate: ModalViewControllerDelegate?
-    
     
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupBackgroundView()
         
         if let _ = movie {} else {
@@ -51,13 +48,17 @@ class MovieDetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        checkIfLiked()
-        checkIfWatched()
+        if Utilities.isLoggedIn() {
+            checkIfLiked()
+            checkIfWatched()
+        }
+
     }
 }
 
 //MARK: Networking Methods
 extension MovieDetailViewController {
+    
     private func checkIfLiked() {
         
         TMDBClient.sharedInstance.getFavoriteMovies { (movies, error) in
@@ -97,6 +98,7 @@ extension MovieDetailViewController {
     }
     
     func getMovieDetailsById(id: Int) {
+        
         TMDBClient.sharedInstance.getMovieDetailBy(id) { (result, error) in
             performUIUpdatesOnMain({ 
                 guard error == nil else {
@@ -108,13 +110,8 @@ extension MovieDetailViewController {
             })
         }
     }
-    
-    func getDetailPosterByPath(path: String) {
-        TMDBClient.sharedInstance.taskForGETImage(TMDBClient.PosterSizes.DetailPoster, filePath: path) { (imageData, error) in
-            
-        }
-    }
 }
+
 
 //MARK: UITableView Delegate && DataSource Method
 extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource {
@@ -131,7 +128,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
-        case 0:
+        case 0: //Title Cell
             let cell = tableView.dequeueReusableCellWithIdentifier("TitleSectionCell") as! MovieDetailCellForTitleSection
             cell.configCell()
             cell.titleLbl.text = movie?.title
@@ -139,7 +136,7 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
             cell.runtimeLbl.text = "Runtime: \(movie!.runtime!)mins"
             cell.releaseDateLbl.text = "Year: \(movie!.releaseDate!)"
             return cell
-        case 1:
+        case 1: //Overview Cell
             let cell = tableView.dequeueReusableCellWithIdentifier("OverviewSectionCell") as! MovieDetailCellForOverview
             cell.configCell()
             cell.overviewLbl.text = movie?.overview!
@@ -159,7 +156,6 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
             } else {
                 return 0
             }
-            
         default:
             return 0
         }
@@ -205,40 +201,57 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     }
     
     @IBAction func watchButtonClicked(sender: AnyObject) {
-        let shouldWatchlist = !isWatchlist
-        
-        TMDBClient.sharedInstance.postToWatchlist(movieID!, watchlist: shouldWatchlist) { (statusCode, error) in
-            if let error = error {
-                showAlertViewWith("Oops", error: "Could Not Add to Watched List. Error: \(error.localizedDescription)", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
-            } else {
-                if statusCode == 1 || statusCode == 12 || statusCode == 13 {
-                    self.isWatchlist = shouldWatchlist
-                    performUIUpdatesOnMain {
-                        self.headerView.watchBtn.selected = self.isWatchlist
+        if Utilities.isLoggedIn() {
+            headerView.watchBtn.enabled = false
+            let shouldWatchlist = !isWatchlist
+            
+            TMDBClient.sharedInstance.postToWatchlist(movieID!, watchlist: shouldWatchlist) { (statusCode, error) in
+                performUIUpdatesOnMain {
+                    self.headerView.watchBtn.enabled = true
+                    if let error = error {
+                        showAlertViewWith("Oops", error: "Could Not Add to Watched List. Error: \(error.localizedDescription)", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    } else {
+                        if statusCode == 1 || statusCode == 12 || statusCode == 13 {
+                            self.isWatchlist = shouldWatchlist
+                            
+                            self.headerView.watchBtn.selected = self.isWatchlist
+                            
+                        } else {
+                            showAlertViewWith("Oops", error: "Could Not Add to Watched List.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                        }
                     }
-                } else {
-                    showAlertViewWith("Oops", error: "Could Not Add to Watched List.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                 }
             }
+        } else {
+            invokeLoginVCFrom(self, toViewController: nil)
         }
+        
     }
     
     @IBAction func likeButtonClicked(sender: AnyObject) {
-        let shouldFavorite = !isFavorite
-        
-        TMDBClient.sharedInstance.postToFavorites(movieID!, favorite: shouldFavorite) { (statusCode, error) in
-            if let error = error {
-                showAlertViewWith("Oops", error: "Could Not Like It. Error: \(error.localizedDescription)", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
-            } else {
-                if statusCode == 1 || statusCode == 12 || statusCode == 13 {
-                    self.isFavorite = shouldFavorite
-                    performUIUpdatesOnMain {
-                        self.headerView.likeBtn.selected = self.isFavorite
+        if Utilities.isLoggedIn() {
+            headerView.likeBtn.enabled = false
+            let shouldFavorite = !isFavorite
+            
+            TMDBClient.sharedInstance.postToFavorites(movieID!, favorite: shouldFavorite) { (statusCode, error) in
+                performUIUpdatesOnMain({
+                    self.headerView.likeBtn.enabled = true
+                    if let error = error {
+                        showAlertViewWith("Oops", error: "Could Not Like It. Error: \(error.localizedDescription)", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    } else {
+                        if statusCode == 1 || statusCode == 12 || statusCode == 13 {
+                            self.isFavorite = shouldFavorite
+                            performUIUpdatesOnMain {
+                                self.headerView.likeBtn.selected = self.isFavorite
+                            }
+                        } else {
+                            showAlertViewWith("Oops", error: "Could Not Like It.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                        }
                     }
-                } else {
-                    showAlertViewWith("Oops", error: "Could Not Like It.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
-                }
+                })
             }
+        } else {
+           invokeLoginVCFrom(self, toViewController: nil)
         }
     }
 }

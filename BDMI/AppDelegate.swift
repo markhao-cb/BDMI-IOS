@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MAThemeKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,8 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func setTheme() {
+        MAThemeKit.setupThemeWithPrimaryColor(MAThemeKit.colorWithR(33, g: 7, b: 67), secondaryColor: UIColor.whiteColor(), fontName: "AppleSDGothicNeo-Bold", lightStatusBar: false)
+        MAThemeKit.customizeSegmentedControlWithMainColor(MAThemeKit.colorWithR(102, g: 51, b: 153), secondaryColor: UIColor.whiteColor())
+        MAThemeKit.customizeTabBarColor(UIColor.whiteColor(), textColor: MAThemeKit.colorWithR(102, g: 51, b: 153), fontName: "AppleSDGothicNeo-Regular", fontSize: 13)
+    }
+    
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        
         checkIfFirstLaunch()
         return true
     }
@@ -35,29 +41,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         stack.autoSave(60)
-        UITabBar.appearance().tintColor = UIColor.redColor()
-        
-        var initVCIdentifier: String?
+        setTheme()
         
         if case let userID as Int = Utilities.userDefault.valueForKey("UserID"), case let sessionID as String =  Utilities.userDefault.valueForKey("SessionID"), case let requestToken as String = Utilities.userDefault.valueForKey("RequestToken"){
             TMDBClient.sharedInstance.userID = userID
             TMDBClient.sharedInstance.sessionID = sessionID
             TMDBClient.sharedInstance.requestToken = requestToken
-            
-            initVCIdentifier = "BDMIHomeViewController"
-        } else {
-            initVCIdentifier = "LoginVC"
         }
-        
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        let initialViewController = storyboard.instantiateViewControllerWithIdentifier(initVCIdentifier!)
-        
-        self.window?.rootViewController = initialViewController
-        self.window?.makeKeyAndVisible()
-        
         return true
     }
 

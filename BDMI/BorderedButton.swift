@@ -40,11 +40,11 @@ class BorderedButton: UIButton {
     private func themeBorderedButton() {
         layer.masksToBounds = true
         layer.cornerRadius = borderedButtonCornerRadius
-        highlightedBackingColor = darkerBlue
-        backingColor = lighterBlue
-        backgroundColor = lighterBlue
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        titleLabel?.font = UIFont.systemFontOfSize(titleLabelFontSize)
+//        highlightedBackingColor = darkerBlue
+//        backingColor = lighterBlue
+//        backgroundColor = lighterBlue
+//        setTitleColor(UIColor.whiteColor(), forState: .Normal)
+//        titleLabel?.font = UIFont.systemFontOfSize(titleLabelFontSize)
     }
     
     // MARK: Setters

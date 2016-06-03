@@ -7,28 +7,27 @@
 //
 
 import UIKit
+import TransitionTreasury
+import TransitionAnimation
+import FlatUIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: BDMIViewController {
     
     // MARK: Properties
     
-    
-    @IBOutlet weak var loginButton: BorderedButton!
-    
+    @IBOutlet weak var loginButton: FUIButton!
+    var toViewController : BDMIViewController?
     var session: NSURLSession!
     
     // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        configureBackground()
+        configButton()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     
-    // MARK: Actions
+    // MARK: IBActions
     
     @IBAction func loginPressed(sender: AnyObject) {
         TMDBClient.sharedInstance.authenticateWithViewController(self) { (success, errorString) in
@@ -41,16 +40,23 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func cancelBtnClicked(sender: AnyObject) {
+        modalDelegate?.modalViewControllerDismiss(callbackData: nil)
+    }
+    
+    
     // MARK: Login
     
     private func completeLogin() {
-        let controller = storyboard!.instantiateViewControllerWithIdentifier("BDMIHomeViewController") as! UITabBarController
-        presentViewController(controller, animated: true, completion: nil)
+        if let toVC = toViewController {
+            toVC.modalDelegate = modalDelegate
+        }
+        modalDelegate?.modalViewControllerDismiss(callbackData: nil)
     }
 }
 
-// MARK: - LoginViewController (Configure UI)
-
+// MARK: UI Related Methods
 extension LoginViewController {
     
     private func setUIEnabled(enabled: Bool) {
@@ -66,18 +72,21 @@ extension LoginViewController {
     
     private func displayError(errorString: String?) {
         if let errorString = errorString {
-            showAlertViewWith("Oops", error: errorString, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            showAlertViewWith("Oops", error: errorString, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: {
+                performUIUpdatesOnMain({ 
+                    self.modalDelegate?.modalViewControllerDismiss(callbackData: nil)
+                })
+                }, secondButtonTitle: nil, secondButtonHandler: nil)
         }
     }
     
-    private func configureBackground() {
-        let backgroundGradient = CAGradientLayer()
-        let colorTop = UIColor(red: 0.345, green: 0.839, blue: 0.988, alpha: 1.0).CGColor
-        let colorBottom = UIColor(red: 0.023, green: 0.569, blue: 0.910, alpha: 1.0).CGColor
-        backgroundGradient.colors = [colorTop, colorBottom]
-        backgroundGradient.locations = [0.0, 1.0]
-        backgroundGradient.frame = view.frame
-        view.layer.insertSublayer(backgroundGradient, atIndex: 0)
+    private func configButton() {
+        loginButton.cornerRadius = 6.0
+        loginButton.shadowColor = UIColor.wisteriaColor()
+        loginButton.buttonColor = UIColor.amethystColor()
+        loginButton.shadowHeight = 3.0
+        loginButton.titleLabel?.font = UIFont.boldFlatFontOfSize(16)
     }
 }
+
 

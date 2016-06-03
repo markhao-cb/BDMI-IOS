@@ -10,7 +10,7 @@ import UIKit
 import TransitionTreasury
 import TransitionAnimation
 
-class MyListViewController: UIViewController {
+class MyListViewController: BDMIViewController {
 
     //MARK: Properties
     @IBOutlet weak var segmentControl: UISegmentedControl!
@@ -18,22 +18,30 @@ class MyListViewController: UIViewController {
     var favoriteMovies : [TMDBMovie]?
     var watchedMovies : [TMDBMovie]?
     
-    var tr_presentTransition: TRViewControllerTransitionDelegate?
+    
     
     //MARK: Life Circle
     override func viewDidLoad() {
         super.viewDidLoad()
-        createPlaceHolderLabel("No Results")
-        let barItem = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain, target: self, action: #selector(logoutBtnClicked))
-        barItem.tintColor = UIColor.redColor()
-        navigationItem.rightBarButtonItem = barItem
+        placeHolderLabel = createPlaceHolderLabel("No Results")
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         tableView.hidden = true
-        getFavoriteMovies()
-        getWatchedMovies()
+        segmentControl.enabled = Utilities.isLoggedIn()
+        if Utilities.isLoggedIn() {
+            changeTextForLabel(placeHolderLabel!, text: "No Results")
+            let barItem = UIBarButtonItem(title: "Sign Out", style: .Plain, target: self, action: #selector(signInOrOutBtnClicked))
+            navigationItem.rightBarButtonItem = barItem
+            getFavoriteMovies()
+            getWatchedMovies()
+        } else {
+            changeTextForLabel(placeHolderLabel!, text: "Please Sign In First.")
+            let barItem = UIBarButtonItem(title: "Sign In", style: .Plain, target: self, action: #selector(signInOrOutBtnClicked))
+            navigationItem.rightBarButtonItem = barItem
+        }
+        
     }
     
     //MARK: IBAction
@@ -54,10 +62,19 @@ class MyListViewController: UIViewController {
         self.tableView.reloadData()
     }
     
-    func logoutBtnClicked() {
-        resetUserInfo()
-        let loginVC = self.storyboard?.instantiateViewControllerWithIdentifier("LoginVC") as! LoginViewController
-        self.presentViewController(loginVC, animated: true, completion: nil)
+    func signInOrOutBtnClicked() {
+        if Utilities.isLoggedIn() {
+            showAlertViewWith("Sign Out", error: "Are you sure you want to sign out?", type: .AlertViewWithTwoButtons, firstButtonTitle: "Sign Out", firstButtonHandler: {
+                performUIUpdatesOnMain({
+                    self.resetUserInfo()
+                    let homeVC = self.storyboard?.instantiateViewControllerWithIdentifier("BDMIHomeViewController")
+                    self.presentViewController(homeVC!, animated: true, completion: nil)
+                })
+                }, secondButtonTitle: "Cancel", secondButtonHandler: nil)
+        } else {
+            invokeLoginVCFrom(self, toViewController: nil)
+        }
+        
     }
     
     //MARK: Helper
@@ -103,7 +120,7 @@ extension MyListViewController {
 
 
     //MARK: UITableView Delegate && Data Source
-extension MyListViewController: UITableViewDelegate, UITableViewDataSource, ModalTransitionDelegate {
+extension MyListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentControl.selectedSegmentIndex == 0 {
             if let movies = favoriteMovies {

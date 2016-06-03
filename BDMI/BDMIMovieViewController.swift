@@ -13,7 +13,7 @@ import CoreData
 import TransitionTreasury
 import TransitionAnimation
 
-class BDMIMovieViewController: UIViewController {
+class BDMIMovieViewController: BDMIViewController {
     
     
     //MARK: Propertites
@@ -26,8 +26,6 @@ class BDMIMovieViewController: UIViewController {
     var topRatedMovies : [TMDBMovie]?
     var storedOffsets = [Int: CGFloat]()
     var scrollViewsetted = false
-    
-    var tr_presentTransition: TRViewControllerTransitionDelegate?
     
     
     //MARK: Life Circle
@@ -101,16 +99,16 @@ extension BDMIMovieViewController : UIGestureRecognizerDelegate {
     
     func moveToNextPage (){
         
-        let pageWidth:CGFloat = CGRectGetWidth(self.scrollView!.frame)
+        let pageWidth:CGFloat = CGRectGetWidth(scrollView!.frame)
         let maxWidth:CGFloat = pageWidth * 4
-        let contentOffset:CGFloat = self.scrollView!.contentOffset.x
+        let contentOffset:CGFloat = scrollView!.contentOffset.x
         
         var slideToX = contentOffset + pageWidth
         
-        if  contentOffset + pageWidth == maxWidth{
+        if  contentOffset + pageWidth == maxWidth {
             slideToX = 0
         }
-        self.scrollView!.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(self.scrollView!.frame)), animated: true)
+        scrollView!.scrollRectToVisible(CGRectMake(slideToX, 0, pageWidth, CGRectGetHeight(scrollView!.frame)), animated: true)
     }
     
     private func configLabel(label: UILabel) {
@@ -175,6 +173,7 @@ extension BDMIMovieViewController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         guard let tableViewCell = cell as? MovieTableViewCell else {
             return
         }
@@ -185,7 +184,7 @@ extension BDMIMovieViewController : UITableViewDelegate, UITableViewDataSource {
 
 
 //MARK: UICollectionView Delegate and DataSource
-extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDataSource, ModalTransitionDelegate {
+extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView.tag {
@@ -257,7 +256,6 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
                                                     NVActivityIndicatorView.hideHUDForView(cell)
                                                     cell.imageView.alpha = 1.0
                                                 })
-                                                
             })
         }
         
@@ -389,20 +387,12 @@ extension BDMIMovieViewController {
                         if let error = error {
                             print("Prefetch Failed. \(error.domain)")
                         } else {
-                            
-                            //Create new movie and save to coredata
-//                            let newMovie = self.stack.createNewMovie(movieResult!)
-                            
                             //Check if the movie belongs to any collection
                             if let collectionData = movieResult!.belongsToCollection {
                                 let collectionID = collectionData["id"] as! Int
                                 
                                 //Check if the collection is saved
-                                if let _ = self.stack.objectSavedInCoreData(collectionID, entity: CoreDataEntityNames.Collection) as? Collection {
-                                    
-                                    //Add the movie to its collection
-//                                    savedCollection.addMoviesObject(newMovie)
-                                } else {
+                                if let _ = self.stack.objectSavedInCoreData(collectionID, entity: CoreDataEntityNames.Collection) as? Collection {} else {
                                     if !collectionIDs.contains(collectionID) {
                                         collectionIDs.append(collectionID)
                                         //Collection not saved. Get collection data from API
@@ -412,9 +402,8 @@ extension BDMIMovieViewController {
                                                     print("Error while getting collection. Error: \(error?.localizedDescription)")
                                                     return
                                                 }
-                                                //Create new collection and add the movie to it.
+                                                //Create new collection
                                                 let _ = self.stack.createNewCollection(collectionResult!)
-//                                                newCollection.addMoviesObject(newMovie)
                                             })
                                         })
                                     }
