@@ -75,7 +75,7 @@ extension BDMIMovieCollectionsViewController {
                     performUIUpdatesOnMain({
                         Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                         if let error = error {
-                            print("Prefetch Failed. \(error.domain)")
+                            print("Prefetch Failed. \(error.localizedDescription)")
                             showAlertViewWith("Oops", error: error.localizedDescription, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                         } else {
                             //Create new movie and save to coredata

@@ -30,6 +30,10 @@ class LoginViewController: BDMIViewController {
     // MARK: IBActions
     
     @IBAction func loginPressed(sender: AnyObject) {
+        if !Reachability.isConnectedToNetwork(){
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
         TMDBClient.sharedInstance.authenticateWithViewController(self) { (success, errorString) in
             performUIUpdatesOnMain {
                 if success {

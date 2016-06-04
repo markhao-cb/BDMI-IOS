@@ -61,4 +61,12 @@ extension TMDBAuthViewController: UIWebViewDelegate {
             }
         }
     }
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if !Reachability.isConnectedToNetwork() {
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return false
+        }
+        return true
+    }
 }

@@ -67,7 +67,7 @@ extension TMDBClient {
             
             if let error = error {
                 print(error)
-                completionHandlerForToken(success: false, requestToken: nil, errorString: "Login Failed (Request Token).")
+                completionHandlerForToken(success: false, requestToken: nil, errorString: error.localizedDescription)
             } else {
                 if let requestToken = results[TMDBClient.JSONResponseKeys.RequestToken] as? String {
                     completionHandlerForToken(success: true, requestToken: requestToken, errorString: nil)
@@ -104,7 +104,7 @@ extension TMDBClient {
             
             if let error = error {
                 print(error)
-                completionHandlerForSession(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
+                completionHandlerForSession(success: false, sessionID: nil, errorString: error.localizedDescription)
             } else {
                 if let sessionID = results[TMDBClient.JSONResponseKeys.SessionID] as? String {
                     completionHandlerForSession(success: true, sessionID: sessionID, errorString: nil)
@@ -124,7 +124,7 @@ extension TMDBClient {
             
             if let error = error {
                 print(error)
-                completionHandlerForUserID(success: false, userID: nil, errorString: "Login Failed (User ID).")
+                completionHandlerForUserID(success: false, userID: nil, errorString: error.localizedDescription)
             } else {
                 if let userID = results[TMDBClient.JSONResponseKeys.UserID] as? Int {
                     completionHandlerForUserID(success: true, userID: userID, errorString: nil)

@@ -88,7 +88,8 @@ extension SearchViewController: UISearchBarDelegate {
                 })
             }
         } else {
-            changeTextForLabel(placeHolderLabel!, text: "Interest Disconnected")
+            changeTextForLabel(placeHolderLabel!, text: "Internet Disconnected")
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
         }
         
     }

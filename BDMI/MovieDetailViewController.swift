@@ -48,6 +48,10 @@ class MovieDetailViewController: BDMIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if !Reachability.isConnectedToNetwork(){
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
         if Utilities.isLoggedIn() {
             checkIfLiked()
             checkIfWatched()
@@ -108,7 +112,7 @@ extension MovieDetailViewController {
             performUIUpdatesOnMain({
                 Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 guard error == nil else {
-                    showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    showAlertViewWith("Oops", error: error!.localizedDescription, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
                 }
                 self.movie = self.stack.createNewMovie(result!)
@@ -207,6 +211,10 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     }
     
     @IBAction func watchButtonClicked(sender: AnyObject) {
+        if !Reachability.isConnectedToNetwork(){
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
         if Utilities.isLoggedIn() {
             headerView.watchBtn.enabled = false
             let shouldWatchlist = !isWatchlist
@@ -236,6 +244,10 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
     }
     
     @IBAction func likeButtonClicked(sender: AnyObject) {
+        if !Reachability.isConnectedToNetwork(){
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
         if Utilities.isLoggedIn() {
             headerView.likeBtn.enabled = false
             let shouldFavorite = !isFavorite

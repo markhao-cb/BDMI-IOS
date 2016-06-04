@@ -299,6 +299,10 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
 //MARK: Networking Methods
 extension BDMIMovieViewController {
     private func loadData() {
+        if !Reachability.isConnectedToNetwork(){
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
         getNowShowingMovies()
         getPopularMovies()
         geUpcomingMovies()
@@ -399,7 +403,7 @@ extension BDMIMovieViewController {
                     performUIUpdatesOnMain({
                         Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                         if let error = error {
-                            print("Prefetch Failed. \(error.domain)")
+                            print("Prefetch Failed. \(error.localizedDescription)")
                         } else {
                             //Check if the movie belongs to any collection
                             if let collectionData = movieResult!.belongsToCollection {

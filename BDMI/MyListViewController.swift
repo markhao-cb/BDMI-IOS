@@ -34,8 +34,7 @@ class MyListViewController: BDMIViewController {
             changeTextForLabel(placeHolderLabel!, text: "No Results")
             let barItem = UIBarButtonItem(title: "Sign Out", style: .Plain, target: self, action: #selector(signInOrOutBtnClicked))
             navigationItem.rightBarButtonItem = barItem
-            getFavoriteMovies()
-            getWatchedMovies()
+            getLists()
         } else {
             changeTextForLabel(placeHolderLabel!, text: "Please Sign In First.")
             let barItem = UIBarButtonItem(title: "Sign In", style: .Plain, target: self, action: #selector(signInOrOutBtnClicked))
@@ -63,6 +62,10 @@ class MyListViewController: BDMIViewController {
     }
     
     func signInOrOutBtnClicked() {
+        if !Reachability.isConnectedToNetwork(){
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
         if Utilities.isLoggedIn() {
             showAlertViewWith("Sign Out", error: "Are you sure you want to sign out?", type: .AlertViewWithTwoButtons, firstButtonTitle: "Sign Out", firstButtonHandler: {
                 performUIUpdatesOnMain({
@@ -90,6 +93,15 @@ class MyListViewController: BDMIViewController {
 
     //MARK: Networking Methods
 extension MyListViewController {
+    private func getLists() {
+        if !Reachability.isConnectedToNetwork(){
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
+        getFavoriteMovies()
+        getWatchedMovies()
+    }
+    
     private func getFavoriteMovies() {
         Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getFavoriteMovies { (movies, error) in
