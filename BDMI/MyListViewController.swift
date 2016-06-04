@@ -91,27 +91,33 @@ class MyListViewController: BDMIViewController {
     //MARK: Networking Methods
 extension MyListViewController {
     private func getFavoriteMovies() {
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getFavoriteMovies { (movies, error) in
-            performUIUpdatesOnMain({ 
+            performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 if let movies = movies {
                     self.favoriteMovies = movies
                     self.tableView.hidden = (movies.count == 0)
                     self.tableView.reloadData()
                 } else {
                     print(error)
+                    showAlertViewWith("Oops", error: (error?.localizedDescription)!, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                 }
             })
         }
     }
     
     private func getWatchedMovies() {
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getWatchlistMovies { (movies, error) in
-            performUIUpdatesOnMain({ 
+            performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 if let movies = movies {
                     self.watchedMovies = movies
                     self.tableView.reloadData()
                 } else {
                     print(error)
+                    showAlertViewWith("Oops", error: (error?.localizedDescription)!, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                 }
             })
         }

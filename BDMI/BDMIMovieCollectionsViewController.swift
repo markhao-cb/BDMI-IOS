@@ -45,10 +45,13 @@ class BDMIMovieCollectionsViewController: BDMIViewController {
 extension BDMIMovieCollectionsViewController {
     private func getMoviesForCollection(collections: [Collection]) {
         for collection in collections {
+            Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
             TMDBClient.sharedInstance.getCollectionlBy(Int(collection.id!), completionHandlerForGetCollection: { (result, error) in
                 performUIUpdatesOnMain({
+                    Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                     guard (error == nil) else {
                         print("Error while getting collection. Error: \(error?.localizedDescription)")
+                        showAlertViewWith("Oops", error: (error?.localizedDescription)!, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                         return
                     }
                     //Get the collection's movie data, loop back to perfetch.
@@ -67,10 +70,13 @@ extension BDMIMovieCollectionsViewController {
             if let _ = stack.objectSavedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {} else {
                 
                 //Movie's not saved. Get movie details from API
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
                 TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (movieResult, error) in
                     performUIUpdatesOnMain({
+                        Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                         if let error = error {
                             print("Prefetch Failed. \(error.domain)")
+                            showAlertViewWith("Oops", error: error.localizedDescription, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                         } else {
                             //Create new movie and save to coredata
                             let newMovie = self.stack.createNewMovie(movieResult!)

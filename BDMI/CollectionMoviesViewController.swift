@@ -48,15 +48,20 @@ class CollectionMoviesViewController: BDMIViewController {
 
 extension CollectionMoviesViewController {
     private func getMoviesForCollection(collection: Collection) {
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getCollectionlBy(Int(collection.id!), completionHandlerForGetCollection: { (result, error) in
-            guard (error == nil) else {
-                print("Error while getting collection. Error: \(error?.localizedDescription)")
-                return
-            }
-            if let parts = result!.parts {
-                let collectionMovies = TMDBMovie.moviesFromResults(parts)
-                self.perfetchMovies(collectionMovies, forCollection: collection)
-            }
+            performUIUpdatesOnMain({ 
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
+                guard (error == nil) else {
+                    print("Error while getting collection. Error: \(error?.localizedDescription)")
+                    showAlertViewWith("Oops", error: (error?.localizedDescription)!, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+                    return
+                }
+                if let parts = result!.parts {
+                    let collectionMovies = TMDBMovie.moviesFromResults(parts)
+                    self.perfetchMovies(collectionMovies, forCollection: collection)
+                }
+            })
         })
         
     }
@@ -71,10 +76,13 @@ extension CollectionMoviesViewController {
             } else {
                 
                 //Movie's not saved. Get movie details from API
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
                 TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (movieResult, error) in
                     performUIUpdatesOnMain({
+                        Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                         if let error = error {
                             print("Prefetch Failed. \(error.domain)")
+                            showAlertViewWith("Oops", error: (error.localizedDescription), type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                         } else {
                             //Create new movie and save to coredata
                             let newMovie = self.stack.createNewMovie(movieResult!)

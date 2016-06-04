@@ -306,8 +306,11 @@ extension BDMIMovieViewController {
     }
     
     private func getNowShowingMovies() {
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.NowPlaying) { (result, error) in
-            performUIUpdatesOnMain({ 
+            
+            performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 guard (error == nil) else {
                     showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
@@ -323,8 +326,11 @@ extension BDMIMovieViewController {
     }
     
     private func geUpcomingMovies() {
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.UpComing) { (result, error) in
+            
             performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 guard (error == nil) else {
                     showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
@@ -340,8 +346,11 @@ extension BDMIMovieViewController {
     }
     
     private func getPopularMovies() {
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.Popular) { (result, error) in
+            
             performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 guard (error == nil) else {
                     showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
@@ -358,8 +367,10 @@ extension BDMIMovieViewController {
     }
     
     private func getTopRatedMovies() {
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getMoviesBy(TMDBClient.Methods.TopRated) { (result, error) in
             performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 guard (error == nil) else {
                     showAlertViewWith("Oops", error: "Failed to Get New Data. Please Try Again Later.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
@@ -382,8 +393,11 @@ extension BDMIMovieViewController {
             if let _ = stack.objectSavedInCoreData(movie.id, entity: CoreDataEntityNames.Movie) as? Movie {} else {
                 
                 //Movie's not saved. Get movie details from API
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
                 TMDBClient.sharedInstance.getMovieDetailBy(movie.id, completionHandlerForGetDetail: { (movieResult, error) in
-                    performUIUpdatesOnMain({ 
+                    
+                    performUIUpdatesOnMain({
+                        Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                         if let error = error {
                             print("Prefetch Failed. \(error.domain)")
                         } else {
@@ -396,8 +410,10 @@ extension BDMIMovieViewController {
                                     if !collectionIDs.contains(collectionID) {
                                         collectionIDs.append(collectionID)
                                         //Collection not saved. Get collection data from API
+                                        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
                                         TMDBClient.sharedInstance.getCollectionlBy(collectionID, completionHandlerForGetCollection: { (collectionResult, error) in
                                             performUIUpdatesOnMain({
+                                                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                                                 guard (error == nil) else {
                                                     print("Error while getting collection. Error: \(error?.localizedDescription)")
                                                     return

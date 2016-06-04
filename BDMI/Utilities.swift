@@ -14,7 +14,6 @@ import SystemConfiguration
 
 struct Utilities {
     
-    
     static let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     static let session = NSURLSession.sharedSession()
     static let userDefault = NSUserDefaults.standardUserDefaults()
@@ -151,6 +150,10 @@ extension NVActivityIndicatorView {
         }
         return nil
     }
+}
+
+func showNetworkActivityIndicator(visible: Bool) {
+    
 }
 
 //MARK: String Helper Methods

@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     let stack = CoreDataStack(modelName: "Model")!
+    var NumberOfCallsToSetVisible = 0
     
     func checkIfFirstLaunch() {
         if (Utilities.userDefault.boolForKey("HasLaunchedBefore")) {
@@ -32,6 +33,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         MAThemeKit.customizeTabBarColor(UIColor.whiteColor(), textColor: MAThemeKit.colorWithR(102, g: 51, b: 153), fontName: "AppleSDGothicNeo-Regular", fontSize: 13)
     }
     
+    func setNewworkActivityIndicatorVisible(setVisible: Bool) {
+        if setVisible {
+            NumberOfCallsToSetVisible += 1
+        } else {
+            NumberOfCallsToSetVisible -= 1
+        }
+        
+        guard (NumberOfCallsToSetVisible >= 0) else {
+            print("Network Activity Indicator was asked to hide more often than shown")
+            return
+        }
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = (NumberOfCallsToSetVisible > 0)
+        
+    }
+    
     func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         checkIfFirstLaunch()
         return true
@@ -42,8 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         stack.autoSave(60)
         setTheme()
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         if case let userID as Int = Utilities.userDefault.valueForKey("UserID"), case let sessionID as String =  Utilities.userDefault.valueForKey("SessionID"), case let requestToken as String = Utilities.userDefault.valueForKey("RequestToken"){
             TMDBClient.sharedInstance.userID = userID

@@ -61,46 +61,52 @@ extension MovieDetailViewController {
     
     private func checkIfLiked() {
         
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getFavoriteMovies { (movies, error) in
-            if let movies = movies {
-                
-                for movie in movies {
-                    if movie.id == self.movieID {
-                        self.isFavorite = true
+            
+            performUIUpdatesOnMain({ 
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
+                if let movies = movies {
+                    for movie in movies {
+                        if movie.id == self.movieID {
+                            self.isFavorite = true
+                        }
                     }
-                }
-                performUIUpdatesOnMain {
                     self.headerView.likeBtn.selected = self.isFavorite
+                    
+                } else {
+                    print(error)
+                    showAlertViewWith("Oops", error: (error?.localizedDescription)!, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                 }
-            } else {
-                print(error)
-            }
+            })
         }
     }
     
     private func checkIfWatched() {
-
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getWatchlistMovies { (movies, error) in
-            if let movies = movies {
-                
-                for movie in movies {
-                    if movie.id == self.movieID {
-                        self.isWatchlist = true
+            performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
+                if let movies = movies {
+                    for movie in movies {
+                        if movie.id == self.movieID {
+                            self.isWatchlist = true
+                        }
                     }
+                    self.headerView.watchBtn.selected = self.isWatchlist
+                } else {
+                    print(error)
+                    showAlertViewWith("Oops", error: (error?.localizedDescription)!, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                 }
-                performUIUpdatesOnMain {
-                   self.headerView.watchBtn.selected = self.isWatchlist
-                }
-            } else {
-                print(error)
-            }
+            })
         }
     }
     
     func getMovieDetailsById(id: Int) {
-        
+        Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
         TMDBClient.sharedInstance.getMovieDetailBy(id) { (result, error) in
-            performUIUpdatesOnMain({ 
+            performUIUpdatesOnMain({
+                Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                 guard error == nil else {
                     showAlertViewWith("Oops", error: error!.domain, type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     return
@@ -205,15 +211,16 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
             headerView.watchBtn.enabled = false
             let shouldWatchlist = !isWatchlist
             
+            Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
             TMDBClient.sharedInstance.postToWatchlist(movieID!, watchlist: shouldWatchlist) { (statusCode, error) in
                 performUIUpdatesOnMain {
+                    Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                     self.headerView.watchBtn.enabled = true
                     if let error = error {
                         showAlertViewWith("Oops", error: "Could Not Add to Watched List. Error: \(error.localizedDescription)", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     } else {
                         if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                             self.isWatchlist = shouldWatchlist
-                            
                             self.headerView.watchBtn.selected = self.isWatchlist
                             
                         } else {
@@ -233,17 +240,17 @@ extension MovieDetailViewController : UITableViewDelegate, UITableViewDataSource
             headerView.likeBtn.enabled = false
             let shouldFavorite = !isFavorite
             
+            Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
             TMDBClient.sharedInstance.postToFavorites(movieID!, favorite: shouldFavorite) { (statusCode, error) in
                 performUIUpdatesOnMain({
+                    Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                     self.headerView.likeBtn.enabled = true
                     if let error = error {
                         showAlertViewWith("Oops", error: "Could Not Like It. Error: \(error.localizedDescription)", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                     } else {
                         if statusCode == 1 || statusCode == 12 || statusCode == 13 {
                             self.isFavorite = shouldFavorite
-                            performUIUpdatesOnMain {
-                                self.headerView.likeBtn.selected = self.isFavorite
-                            }
+                            self.headerView.likeBtn.selected = self.isFavorite
                         } else {
                             showAlertViewWith("Oops", error: "Could Not Like It.", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
                         }

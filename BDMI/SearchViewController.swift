@@ -73,8 +73,10 @@ extension SearchViewController: UISearchBarDelegate {
         // new search
         
         if Reachability.isConnectedToNetwork() {
+            Utilities.appDelegate.setNewworkActivityIndicatorVisible(true)
             searchTask = TMDBClient.sharedInstance.getMoviesForSearchString(searchText) { (movies, error) in
-                performUIUpdatesOnMain({ 
+                performUIUpdatesOnMain({
+                    Utilities.appDelegate.setNewworkActivityIndicatorVisible(false)
                     self.searchTask = nil
                     if let movies = movies {
                         self.movies = movies

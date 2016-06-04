@@ -8,10 +8,10 @@
 
 import UIKit
 
-class TMDBClient: NSObject {
+class TMDBClient {
     
     static let sharedInstance = TMDBClient()
-    private override init() {}
+    private init() {}
     
     var session = NSURLSession.sharedSession()
     
