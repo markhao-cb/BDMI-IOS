@@ -36,9 +36,12 @@ class MyListViewController: BDMIViewController {
             navigationItem.rightBarButtonItem = barItem
             getLists()
         } else {
-            changeTextForLabel(placeHolderLabel!, text: "Please Sign In First.")
+            changeTextForLabel(placeHolderLabel!, text: "Please Sign In First")
             let barItem = UIBarButtonItem(title: "Sign In", style: .Plain, target: self, action: #selector(signInOrOutBtnClicked))
             navigationItem.rightBarButtonItem = barItem
+        }
+        if !Reachability.isConnectedToNetwork() {
+            changeTextForLabel(placeHolderLabel!, text: "Internet Disconnected")
         }
         
     }

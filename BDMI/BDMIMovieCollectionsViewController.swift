@@ -32,6 +32,7 @@ class BDMIMovieCollectionsViewController: BDMIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         fetchCollection()
         if let collections = collections where collections.count != 0 {
             tableView.hidden = false

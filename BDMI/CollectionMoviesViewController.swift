@@ -27,7 +27,7 @@ class CollectionMoviesViewController: BDMIViewController {
         super.viewDidLoad()
         if let collection = collection {
             let movies = collection.movies?.allObjects as? [Movie]
-            if movies!.count == 0 {
+            if movies!.count == 0 && Reachability.isConnectedToNetwork() {
                 getMoviesForCollection(collection)
             } else {
                 collectionMovies = Array(Set(movies!))

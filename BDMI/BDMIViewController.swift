@@ -26,4 +26,12 @@ class BDMIViewController: UIViewController, ModalTransitionDelegate {
         }
         viewController.tr_presentViewController(loginVC, method: TRPresentTransitionMethod.PopTip(visibleHeight: 200))
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if !Reachability.isConnectedToNetwork() {
+            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
+            return
+        }
+    }
 }

@@ -39,6 +39,9 @@ class MovieDetailViewController: BDMIViewController {
                 if case let movie as Movie = stack.objectSavedInCoreData(id, entity: CoreDataEntityNames.Movie) {
                     self.movie = movie
                 } else {
+                    if !Reachability.isConnectedToNetwork(){
+                        return
+                    }
                     getMovieDetailsById(id)
                 }
             }
@@ -48,11 +51,8 @@ class MovieDetailViewController: BDMIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if !Reachability.isConnectedToNetwork(){
-            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
-            return
-        }
-        if Utilities.isLoggedIn() {
+        
+        if Utilities.isLoggedIn() && Reachability.isConnectedToNetwork() {
             checkIfLiked()
             checkIfWatched()
         }

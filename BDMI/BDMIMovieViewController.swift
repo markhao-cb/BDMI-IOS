@@ -299,14 +299,12 @@ extension BDMIMovieViewController : UICollectionViewDelegate, UICollectionViewDa
 //MARK: Networking Methods
 extension BDMIMovieViewController {
     private func loadData() {
-        if !Reachability.isConnectedToNetwork(){
-            showAlertViewWith("Oops", error: "Internet Disconnected", type: .AlertViewWithOneButton, firstButtonTitle: "OK", firstButtonHandler: nil, secondButtonTitle: nil, secondButtonHandler: nil)
-            return
+        if Reachability.isConnectedToNetwork(){
+            getNowShowingMovies()
+            getPopularMovies()
+            geUpcomingMovies()
+            getTopRatedMovies()
         }
-        getNowShowingMovies()
-        getPopularMovies()
-        geUpcomingMovies()
-        getTopRatedMovies()
     }
     
     private func getNowShowingMovies() {

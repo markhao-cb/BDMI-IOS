@@ -29,6 +29,7 @@ class SearchViewController: BDMIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        movieSearchBar.userInteractionEnabled = Reachability.isConnectedToNetwork()
         if !Reachability.isConnectedToNetwork() {
             changeTextForLabel(placeHolderLabel!, text: "Interest Disconnected")
         } else {
